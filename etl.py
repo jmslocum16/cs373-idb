@@ -9,6 +9,8 @@ DEBUG = True
 TEAMS_BY_SEASON_URL = "http://stats.nba.com/stats/leaguedashteamstats?DateFrom=&DateTo=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=%04d-%02d&SeasonSegment=&SeasonType=Regular+Season&StarterBench=&VsConference=&VsDivision="
 # 4-digit year, 2-digit year, team ID
 PLAYERS_BY_TEAM_SEASON = "http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=%04d-%02d&SeasonSegment=&SeasonType=Regular+Season&TeamID=%d&VsConference=&VsDivision="
+# team ID
+TEAM_ABBR_URL = "http://stats.nba.com/stats/teaminfocommon?LeagueID=00&SeasonType=Regular+Season&TeamID=%s&season=2014-15"
 
 class Stats:
   def __init__(self, row):
@@ -45,6 +47,7 @@ class Team:
     self.id = row[0]
     self.name = row[1]
     self.gp = row[2]
+    self.abbrev = None
 
 class Player:
   def __init__(self, row):
@@ -65,7 +68,7 @@ def extract():
     "playerStats" : [ Player(), Player(), ... ]    # list of individual stats
   }
   """
-  for year in range(2005, 2006):
+  for year in range(2014, 2015):
     result[str(year)] = {}
     teamsRequestString = TEAMS_BY_SEASON_URL % (year, (year + 1) % 100)
     if DEBUG:
@@ -83,6 +86,16 @@ def extract():
       result[str(year)][str(teamId)]["playerStats"] = []
       for playerRow in playersByTeamSeasonJson["resultSets"][1]["rowSet"]:
         result[str(year)][str(teamId)]["playerStats"].append(Player(playerRow))
+  teamIdSet = set()
+  for year in result:
+    for teamId in result[year]:
+      teamIdSet.add(teamId)
+  for teamId in teamIdSet:
+    teamStatPageRequestString = TEAM_ABBR_URL % teamId
+    if DEBUG:
+      print(teamStatPageRequestString)
+    teamStatPageJson = requests.get(teamStatPageRequestString).json()
+    result["2014"][teamId]["teamStats"].abbrev = teamStatPageJson["resultSets"][0]["rowSet"][0][4]
   return result
 
 def transform(raw_data):
