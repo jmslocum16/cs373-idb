@@ -1,5 +1,6 @@
 import json
 import requests
+import psycopg2
 
 DEBUG = True
 
@@ -104,15 +105,83 @@ def transform(raw_data):
   """
   return raw_data
 
-def load(data):
+def load(data, conn):
   """
   data extracted, transformed data to load to database
   """
+  cur = conn.cursor()
+
   print("Dumping data...")
+  teamIds = {}
+  for season in data:
+    for teamId in data[season]:
+      teamIds[teamId] = (data[season][teamId]["teamStats"].name, data[season][teamId]["teamStats"].abbrev)
+  
+  for teamId in teamIds:
+    try:
+      cur.execute("""INSERT INTO nba_team VALUES (TEAM_ID, NAME, ABRV)
+		     SELECT %s, %s, %s
+		     WHERE NOT EXISTS (SELECT 1 FROM nba_team WHERE team_id = %s""", [teamId, teamIds[teamId][0], teamIds[teamId][1], teamId])
+    except psycopg2.IntegrityError:
+      pass
+
+  playerIds = set()
+  for season in data:
+    for teamId in data[season]:
+      players = data[season][teamId]["playerStats"]
+      for player in players:
+        if player.id not in playerIds:
+          playerIds.add(player.id)
+          try:
+            cur.execute("""INSERT INTO nba_player (PLAYER_ID, NAME)
+                         SELECT %s, %s
+                         WHERE NOT EXISTS (SELECT 1 FROM nba_player WHERE player_id = %s""", [player.id, player.name, player.id])
+          except psycopg2.IntegrityError:
+            pass
+
+  conn.commit()
+  for season in data:
+    for teamId in data[season]:
+      teamStats = data[season][teamId]["teamStats"]
+      try:
+        s = teamStats.stats
+        cur.execute("""INSERT INTO nba_stats (player_id, team_id, season, gp, wins, losses, pct,
+			 mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
+			 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
+			SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+			WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id == NULL AND team_id == %s AND season == %s""",
+			["NULL", teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
+			 s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk, s.blka, s.pf, s.pfd, s.pts, s.plusmins, teamId, season])
+      except psycopg2.IntegrityError:
+        pass
+      playerStatsList = data[season][teamId]["playerStats"]
+      for player in playerStatsList:
+      	try:
+      	  s = player.stats
+      	  cur.execute("""INSERT INTO nba_stats (player_id, team_id, season, gp, wins, losses, pct,
+	  		mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
+      	  		 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
+      	  		SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+      	  		WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id == %s AND team_id == %s AND season == %s""",
+			[player.id, teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
+      	  		s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk,
+			s.blka, s.pf, s.pfd, s.pts, s.plusmins, player.id, teamId, season])
+      	except psycopg2.IntegrityError:
+      	  pass
+      
   print("Data dump not currently implemented")
+  cur.close()
   return
 
 if '__main__' == __name__:
+
+  try :
+    connection = psycopg2.connect(database="nba", user="postgres", password="nbaproject", host="localhost")
+  except psycopg2.Error as e :
+    print (":(")
   raw_data = extract()
   res_data = transform(raw_data)
-  load(res_data)
+  load(res_data, connection)
+  connection.close()
+
+  
