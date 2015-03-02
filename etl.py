@@ -143,34 +143,47 @@ def load(data, conn):
   for season in data:
     for teamId in data[season]:
       teamStats = data[season][teamId]["teamStats"]
+      """
+      Games played wasn't in the stats class, 
+      so for now I just added together wins and loses. 
+      We can change this later. 
+      """
+
       try:
         s = teamStats.stats
         cur.execute("""INSERT INTO nba_stats (player_id, team_id, season, gp, wins, losses, pct,
 			 mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
-			 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
+			 ass, tov, stl, blk, blka, pf, pfd, pts, plusminus)
 			SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-			WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id = NULL AND team_id = %s AND season = %s);""",
-			["NULL", teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
-			 s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk, s.blka, s.pf, s.pfd, s.pts, s.plusmins, teamId, season])
+			WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id IS NULL AND team_id = %s AND season = %s);""",
+			[None, teamId, season, (s.w + s.l), s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
+			 s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk, s.blka, s.pf, s.pfd, s.pts, s.plusminus, teamId, season])
       except psycopg2.IntegrityError:
         pass
+
+      conn.commit()
+
+      """
+      Same thing as above.
+      Added wins and losses to get games played.
+      """
       playerStatsList = data[season][teamId]["playerStats"]
       for player in playerStatsList:
-      	try:
       	  s = player.stats
       	  cur.execute("""INSERT INTO nba_stats (player_id, team_id, season, gp, wins, losses, pct,
-	  		mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
-      	  		 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
+	  		       mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
+      	  		 ass, tov, stl, blk, blka, pf, pfd, pts, plusminus)
       	  		SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
       	  		WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id = %s AND team_id = %s AND season = %s);""",
-			[player.playerId, teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
+		        	[player.playerId, teamId, season, (s.w + s.l), s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
       	  		s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk,
-			s.blka, s.pf, s.pfd, s.pts, s.plusmins, player.playerId, teamId, season])
-      	except psycopg2.IntegrityError:
-      	  pass
+			        s.blka, s.pf, s.pfd, s.pts, s.plusminus, player.playerId, teamId, season])
+
       
-  print("Data dump not currently implemented")
+  print("Data transfered to database.")
+  print("Data dump not currently implemented.")
   cur.close()
+  conn.close()
   return
 
 if '__main__' == __name__:
