@@ -112,6 +112,13 @@ def load(data, conn):
   cur = conn.cursor()
 
   print("Dumping data...")
+  print("Inserting seasons into database...")
+  for season in data:
+    cur.execute("""INSERT INTO nba_season (season_id)
+                    SELECT %s
+                    WHERE NOT EXISTS (SELECT 1 FROM nba_season where season_id = %s);""",
+                    [season, season])
+  print("Inserting teams into database...")
   teamIds = {}
   for season in data:
     for teamId in data[season]:
@@ -125,6 +132,7 @@ def load(data, conn):
     except psycopg2.IntegrityError:
       pass
 
+  print("Inserting players into database...")
   playerIds = set()
   for season in data:
     for teamId in data[season]:
@@ -140,6 +148,7 @@ def load(data, conn):
             pass
 
   conn.commit()
+  print("Inserting team and player stats into database...")
   for season in data:
     for teamId in data[season]:
       teamStats = data[season][teamId]["teamStats"]
