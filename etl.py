@@ -119,9 +119,9 @@ def load(data, conn):
   
   for teamId in teamIds:
     try:
-      cur.execute("""INSERT INTO nba_team VALUES (TEAM_ID, NAME, ABRV)
+      cur.execute("""INSERT INTO nba_team (TEAM_ID, NAME, ABRV)
 		     SELECT %s, %s, %s
-		     WHERE NOT EXISTS (SELECT 1 FROM nba_team WHERE team_id = %s""", [teamId, teamIds[teamId][0], teamIds[teamId][1], teamId])
+		     WHERE NOT EXISTS (SELECT 1 FROM nba_team WHERE team_id = %s);""", [teamId, teamIds[teamId][0], teamIds[teamId][1], teamId])
     except psycopg2.IntegrityError:
       pass
 
@@ -130,12 +130,12 @@ def load(data, conn):
     for teamId in data[season]:
       players = data[season][teamId]["playerStats"]
       for player in players:
-        if player.id not in playerIds:
-          playerIds.add(player.id)
+        if player.playerId not in playerIds:
+          playerIds.add(player.playerId)
           try:
             cur.execute("""INSERT INTO nba_player (PLAYER_ID, NAME)
                          SELECT %s, %s
-                         WHERE NOT EXISTS (SELECT 1 FROM nba_player WHERE player_id = %s""", [player.id, player.name, player.id])
+                         WHERE NOT EXISTS (SELECT 1 FROM nba_player WHERE player_id = %s);""", [player.playerId, player.name, player.playerId])
           except psycopg2.IntegrityError:
             pass
 
@@ -149,7 +149,7 @@ def load(data, conn):
 			 mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
 			 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
 			SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-			WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id == NULL AND team_id == %s AND season == %s""",
+			WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id = NULL AND team_id = %s AND season = %s);""",
 			["NULL", teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
 			 s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk, s.blka, s.pf, s.pfd, s.pts, s.plusmins, teamId, season])
       except psycopg2.IntegrityError:
@@ -162,10 +162,10 @@ def load(data, conn):
 	  		mins, fgm, fga, fg3m, fg3a, fg3pct, ftm, fta, ftpct, oreb, dreb, reb,
       	  		 ass, tov, stl, blk, blka, pf, pfd, pts, plusmins)
       	  		SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-      	  		WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id == %s AND team_id == %s AND season == %s""",
-			[player.id, teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
+      	  		WHERE NOT EXISTS (SELECT 1 FROM nba_stats WHERE player_id = %s AND team_id = %s AND season = %s);""",
+			[player.playerId, teamId, season, s.gp, s.w, s.l, s.pct, s.mins, s.fgm, s.fga, s.fg3m, s.fg3a,
       	  		s.fg3pct, s.ftm, s.fta, s.ftpct, s.oreb, s.dreb, s.reb, s.ass, s.tov, s.stl, s.blk,
-			s.blka, s.pf, s.pfd, s.pts, s.plusmins, player.id, teamId, season])
+			s.blka, s.pf, s.pfd, s.pts, s.plusmins, player.playerId, teamId, season])
       	except psycopg2.IntegrityError:
       	  pass
       
