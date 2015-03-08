@@ -33,6 +33,124 @@ $(document).ready(function() {
     </span>
 </div>
 
-Insert Spurs team page here
+<!-- Team name, logo, W/L -->
+<div class="container-fluid team-header">
+  <div class="row-fluid">
+    <div class="col-xs-4">
+      <h1>
+        San Antonio Spurs
+      </h1>
+    </div>
+    <div class="row-fluid">
+      <div class="col-xs-4">
+        <h1>
+          <em>Total Wins / Losses</em>
+        </h1>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <img src="http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/sas.png" class="team-logo-img" width=200 height=200>
+    </div>
+  </div>
+</div>
+
+<!-- Team stats, Season-accordion -->
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="panel-group col-xs-2" id="accordion1"> <!-- Outer Accordion -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a aria-expanded="false" class="" data-toggle="collapse" data-parent="#accordion1" href="#collapse2010">
+              2010-2019
+            </a>
+          </h4>
+        </div>
+        <div style="" aria-expanded="false" id="collapse2010" class="panel-collapse collapse">
+          <div class="panel-body">
+          
+            <!-- Here we insert another nested accordion -->
+            
+            <div class="panel-group" id="accordion2010">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion2010" href="#collapseInner2014" onClick=""><!-- Make season visible -->
+                      2014
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion2010" href="#collapseInner2013"><!-- Make season visible -->
+                      2013
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion2010" href="#collapseInner2012"><!-- Make season visible -->
+                      2012
+                    </a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Inner accordion ends here -->
+          
+          </div>
+        </div>
+      </div>
+      <!--
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a aria-expanded="false" class="" data-toggle="collapse" data-parent="#accordion1" href="#collapse2000">
+              2000-2009
+            </a>
+          </h4>
+        </div>
+        <div style="" aria-expanded="false" id="collapse2000" class="panel-collapse collapse">
+          <div class="panel-body">
+          
+            !-- Here we insert another nested accordion --
+            
+            <div class="panel-group" id="accordion2000">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion2000" href="#collapseInner2000">!-- Make season visible --
+                      2000
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion2000" href="#collapseInner2000">!-- Make season visible --
+                      2001
+                    </a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+            
+            !-- Inner accordion ends here --
+          
+          </div>
+        </div>
+      </div>-->
+    </div> <!-- Outer Accordion End -->
+    <div class="col-xs-9">
+      <span>Stats div</span>
+    </div>
+  </div>
+</div>
 
 </body>
