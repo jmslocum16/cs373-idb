@@ -11,10 +11,31 @@
 <!-- Latest compiled and minified Bootstrap JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<script src="sorttable.js"></script>
+<script src="../sorttable.js"></script>
+
+<script>
+// makes logo link back to top
+$(document).ready(function() {
+    $("#logodiv").click(function(){
+        window.location="../splash.html";
+    });
+});
+</script>
+
 </head>
 
-<div>Example for teams in 2013-14 season</div>
+<body>
+
+<div id="logodiv">
+    <span style="margin-left:50px">
+        <img style="display: inline-block" src="http://i.cdn.turner.com/nba/tmpl_asset/static/nba-cms3-homepage/1567/elements/global/nba-logo.png">
+        <h1 style="display: inline-block">NBA Stats</h1>
+    </span>
+</div>
+
+<h1>2013 - 2014 Season</h1>
+
+<h3>Standings</h3>
 
 <table class="table sortable">
     <thead>
@@ -48,34 +69,34 @@
     </thead>
     <tbody>
         <tr>
-            <td>San Antonio Spurs</td>
-            <td>58</td>
-            <td>24</td>
-            <td>0.707</td>
-            <td>48.5</td>
-            <td>39.1</td>
-            <td>81.4</td>
-            <td>8.1</td>
-            <td>21.5</td>
-            <td>0.376</td>
-            <td>16.6</td>
-            <td>21</td>
-            <td>0.791</td>
-            <td>8.1</td>
-            <td>33.2</td>
-            <td>41.3</td>
-            <td>25.1</td>
-            <td>14.7</td>
+            <td><a href="../teams/SAS.html">San Antonio Spurs</a></td>
+            <td>62</td>
+            <td>20</td>
+            <td>0.756</td>
+            <td>48.2</td>
+            <td>40.6</td>
+            <td>83.5</td>
             <td>8.5</td>
-            <td>5.4</td>
-            <td>4.9</td>
-            <td>17.4</td>
-            <td>19.1</td>
-            <td>103</td>
-            <td>6.4</td> 
+            <td>21.4</td>
+            <td>0.397</td>
+            <td>15.7</td>
+            <td>20</td>
+            <td>0.785</td>
+            <td>9.3</td>
+            <td>34</td>
+            <td>43.3</td>
+            <td>25.2</td>
+            <td>14.4</td>
+            <td>7.4</td>
+            <td>5.1</td>
+            <td>4.6</td>
+            <td>18.2</td>
+            <td>19.3</td>
+            <td>105.4</td>
+            <td>7.7</td> 
         </tr>
         <tr>
-            <td>Houston Rockets</td>
+            <td><a href="../teams/HOU.html">Houston Rockets</a></td>
             <td>54</td>
             <td>28</td>
             <td>0.659</td>
@@ -102,7 +123,7 @@
             <td>4.6</td> 
         </tr>
         <tr>
-            <td>Dallas Mavericks</td>
+            <td><a href="../teams/DAL.html">Dallas Mavericks</a></td>
             <td>49</td>
             <td>33</td>
             <td>0.598</td>
@@ -130,3 +151,5 @@
         </tr>
     </tbody>
 </table>
+
+</body>
