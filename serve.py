@@ -1,12 +1,13 @@
 import os.path
 
 from flask import Flask
-app = Flask(__name__, static_url_path='static_html')
+app = Flask(__name__, static_url_path='')
 
 
 @app.route('/')
 def splash():
-    return send_from_directory('/', filename="splash.html")
+    #return "Hello world"
+    return app.send_from_directory('/static_html', filename="splash.html")
 
 @app.route('/player/<player_id>')
 def get_player_page(player_id):
@@ -21,7 +22,7 @@ def get_season_page(season_id):
     #send_from_directory('/', filename='404.html')
 
 @app.route('/team/<team_id>')
-def get_season_page(team_id):
+def get_team_page(team_id):
     if os.path.isfile('/static_html/teams/' + team_id):
         return send_from_directory('/teams/', filename=team_id)
     #send_from_directory('/', filename='404.html')
