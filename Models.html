@@ -1,0 +1,112 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Models</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Models</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/project/cs373-idb/Models.py">/home/project/cs373-idb/Models.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;dynamically&nbsp;generate&nbsp;flask&nbsp;models&nbsp;using&nbsp;sqlalchemy</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Models.html#Player">Player</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Models.html#Season">Season</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Models.html#StatLine">StatLine</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Models.html#Team">Team</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Player">class <strong>Player</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Player">Player</a>&nbsp;Model.&nbsp;Contains&nbsp;all&nbsp;of&nbsp;the&nbsp;information&nbsp;for&nbsp;a&nbsp;specific&nbsp;player.<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;player_id&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nba_team_team_id&nbsp;The&nbsp;team_id&nbsp;of&nbsp;the&nbsp;most&nbsp;recent&nbsp;team&nbsp;this&nbsp;player&nbsp;belongs&nbsp;to.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"></td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Season">class <strong>Season</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Season">Season</a>&nbsp;Model.&nbsp;Contains&nbsp;all&nbsp;of&nbsp;the&nbsp;information&nbsp;for&nbsp;a&nbsp;given&nbsp;season.<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;season_id&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;season.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"></td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="StatLine">class <strong>StatLine</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Stats&nbsp;model.&nbsp;Contains&nbsp;all&nbsp;of&nbsp;the&nbsp;statistics&nbsp;for&nbsp;a&nbsp;given&nbsp;stat&nbsp;line.<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;stat_id&nbsp;The&nbsp;unique&nbsp;id&nbsp;of&nbsp;this&nbsp;stat&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;player_id&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;player&nbsp;this&nbsp;stat&nbsp;line&nbsp;belongs&nbsp;to,&nbsp;or&nbsp;None&nbsp;if&nbsp;it&nbsp;is&nbsp;a&nbsp;team&nbsp;stat&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;team_id&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;team&nbsp;this&nbsp;stat&nbsp;line&nbsp;belongs&nbsp;to,&nbsp;or&nbsp;the&nbsp;team&nbsp;of&nbsp;the&nbsp;player&nbsp;this&nbsp;stat&nbsp;line&nbsp;belongs&nbsp;to.<br>
+&nbsp;&nbsp;&nbsp;season&nbsp;The&nbsp;season&nbsp;id&nbsp;that&nbsp;this&nbsp;stat&nbsp;line&nbsp;is&nbsp;from.<br>
+&nbsp;&nbsp;&nbsp;gp&nbsp;Total&nbsp;games&nbsp;played&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;wins&nbsp;Total&nbsp;games&nbsp;won&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;losses&nbsp;Total&nbsp;games&nbsp;lost&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;pct&nbsp;Win&nbsp;percentage&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;mins&nbsp;The&nbsp;average&nbsp;minutes&nbsp;played&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fgm&nbsp;The&nbsp;average&nbsp;field&nbsp;goals&nbsp;made&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fga&nbsp;The&nbsp;average&nbsp;field&nbsp;goals&nbsp;attempted&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fg3m&nbsp;The&nbsp;average&nbsp;three-point&nbsp;field&nbsp;goals&nbsp;made&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fg3a&nbsp;The&nbsp;average&nbsp;three-point&nbsp;field&nbsp;goals&nbsp;attempted&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fg3pct&nbsp;The&nbsp;total&nbsp;three-point&nbsp;field&nbsp;goal&nbsp;percentage&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;ftm&nbsp;The&nbsp;average&nbsp;free&nbsp;throws&nbsp;made&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;fta&nbsp;The&nbsp;average&nbsp;free&nbsp;throws&nbsp;attempted&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;ftpct&nbsp;The&nbsp;total&nbsp;free&nbsp;throw&nbsp;percentage&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;oreb&nbsp;The&nbsp;average&nbsp;offensive&nbsp;rebounds&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;dreb&nbsp;The&nbsp;average&nbsp;defensive&nbsp;rebounds&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;reb&nbsp;The&nbsp;average&nbsp;rebounds&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;ass&nbsp;The&nbsp;average&nbsp;assists&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;tov&nbsp;The&nbsp;average&nbsp;turnovers&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;stl&nbsp;The&nbsp;average&nbsp;steals&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;blk&nbsp;The&nbsp;average&nbsp;blocks&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;blka&nbsp;The&nbsp;average&nbsp;blocks&nbsp;attempted&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;pf&nbsp;The&nbsp;average&nbsp;personal&nbsp;fouls&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;pfd&nbsp;The&nbsp;average&nbsp;defensive&nbsp;personal&nbsp;fouls&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;pts&nbsp;The&nbsp;average&nbsp;points&nbsp;scored&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>
+&nbsp;&nbsp;&nbsp;plusminus&nbsp;The&nbsp;average&nbsp;plus/minus&nbsp;per&nbsp;game&nbsp;during&nbsp;the&nbsp;season.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"></td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Team">class <strong>Team</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Team">Team</a>&nbsp;Model.&nbsp;Contains&nbsp;all&nbsp;of&nbsp;the&nbsp;information&nbsp;for&nbsp;a&nbsp;specific&nbsp;team.<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;team_id&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;team.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;team.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;abrv&nbsp;The&nbsp;three&nbsp;letter&nbsp;abbreviation&nbsp;the&nbsp;NBA&nbsp;uses&nbsp;for&nbsp;each&nbsp;team.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-loadModels"><strong>loadModels</strong></a>()</dt><dd><tt>Loads&nbsp;the&nbsp;model&nbsp;classes&nbsp;from&nbsp;sqlalchemy&nbsp;using&nbsp;automap.</tt></dd></dl>
+</td></tr></table>
+</body></html>
