@@ -32,9 +32,13 @@ Season = None
 Loads the model classes from sqlalchemy using automap.
 """
 def loadModels() :
+    global StatLine
+    global Player
+    global Team
+    global Season
     Base = automap_base()
 
-    Engine = create_engine("postgresql://{user}:{pass}@{ip}:{port}/{dbname}")
+    Engine = create_engine("postgresql://postgres:nbaproject@23.253.119.99:5432/test")
 
     # reflect the tables
     Base.prepare(Engine, reflect=True)

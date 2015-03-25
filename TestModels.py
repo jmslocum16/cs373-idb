@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from unittest import TestCase
+from unittest import TestCase, main
 
 from Models import StatLine, Player, Team, Season, loadModels
 
@@ -11,12 +11,17 @@ class TestModels (TestCase) :
 
     Engine = None
 
-    def setUp() :
-        if (haveSetUp) :
+    def setUp(self) :
+        if (self.haveSetUp) :
             return
-        haveSetUp = True
-        Engine = loadModels()
+        self.haveSetUp = True
+        self.Engine = loadModels()
 
 
-    def test() :
+    def test(self) :
         print("got through setup")
+
+
+
+if __name__ == "__main__":
+    main()
