@@ -42,4 +42,4 @@ def get_team_page(team_id):
         return app.send_static_file(static_file)
 
 if __name__ == "__main__":
-    app.run()
+    app.run('0.0.0.0')
