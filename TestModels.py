@@ -2,25 +2,24 @@ from sqlalchemy.orm import Session
 
 from unittest import TestCase, main
 
-from Models import StatLine, Player, Team, Season, loadModels
+import Models
 
 class TestModels (TestCase) :
 
-    # only need to do this once
-    haveSetUp = False
-
-    Engine = None
-
-    def setUp(self) :
-        if (self.haveSetUp) :
-            return
-        self.haveSetUp = True
-        self.Engine = loadModels()
+    @classmethod
+    def setUpClass(self) :
+        self.Engine = Models.loadModels()
 
 
     def test(self) :
-        print("got through setup")
+        #print(dir(self.Engine))
+	self.assertEqual(0, 0)
+        pass
 
+    def test2(self) :
+        #print(self.Engine)
+	self.assertTrue(True)
+        pass
 
 
 if __name__ == "__main__":
