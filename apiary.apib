@@ -1,37 +1,119 @@
 FORMAT: 1A
 
-# Notes API
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+# NBA API
+NBA API is a service to view NBA players, teams, and seasons with their respective stats and information
 
-# Group Notes
-Notes related resources of the **Notes API**
+# Group NBA
+NBA related resources of the **NBA API**
 
-## Notes Collection [/notes]
-### List all Notes [GET]
+## Players Collection [/players]
+Responds with a json object listing all of the players in alphabetical order
+### List all Players [GET]
 + Response 200 (application/json)
 
         [{
-          "id": 1, "title": "Jogging in park"
+          "id": 1, "title": "Player 1 and stats"
         }, {
-          "id": 2, "title": "Pick-up posters from post-office"
+          "id": 2, "title": "Player 2 and stats"
         }]
 
-### Create a Note [POST]
-+ Request (application/json)
 
-        { "title": "Buy cheese and bread for breakfast." }
-
-+ Response 201 (application/json)
-
-        { "id": 3, "title": "Buy cheese and bread for breakfast." }
-
-## Note [/notes/{id}]
-A single Note object with all its details
+## Player [/player/{id}]
+A single Player's stats within a json object
 
 + Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
+    + id (required, number, `1`) ... Numeric `id` of the Player to perform action with. Has example value.
 
-### Retrieve a Note [GET]
+### Retrieve a Player [GET]
++ Response 200 (application/json)
+
+    + Header
+
+
+    + Body
+
+            { "id": 2, "name": "Larry Bird" }
+            
+## Player Single Season [/player/{id}/season/{seasonID}]
+A single Player's stats for the given season within a json object
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Player to perform action with. Has example value.
+    + seasonID (required, number, `1999`) ... Numeric `seasonID` of the season to get the stat line of
+
+### Retrieve a Player's single season stat line [GET]
++ Response 200 (application/json)
+
+    + Header
+
+
+    + Body
+
+            [{ "id": 2, "name": "Larry Bird",
+                "Season": {"id": 1999, ...}]
+
+
+## Teams Collection [/teams]
+Responds with a listing all of the teams in the NBA and their respective stats
+### List all Teams [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "title": "Team 1 and stats"
+        }, {
+          "id": 2, "title": "Team 2 and stats"
+        }]
+
+## Team [/team/{id}]
+A single Team's stats and information
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Team to perform action with. Has example value.
+
+### Retrieve a Team [GET]
++ Response 200 (application/json)
+
+        [{ "id": 2, "name": "San Antonio Spurs",... }]
+
+## Team Single Season [/team/{id}/season/{seasonID}]
+A single Team's stats for the given season within a json object
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Team to perform action with. Has example value.
+    + seasonID (required, number, `1999`) ... Numeric `seasonID` of the season to get the stat line of
+
+### Retrieve a Team's single season stat line [GET]
++ Response 200 (application/json)
+
+    + Header
+
+
+    + Body
+
+            [{ "id": 2, "name": "San Antonio Spurs",...,
+                "Season": {"id": 1999, ...}]
+
+
+
+## Seasons Collection [/seasons]
+Responds with a listing of the seasons available to browse and each season's information
+### List all Seasons [GET]
++ Response 200 (application/json)
+
+        [{"Response will be static html page to begin with": "HTML"
+        }, {
+          "id": 1, "title": "Season 1 and stats"
+        }, {
+          "id": 2, "title": "Season 2 and stats"
+        }]
+
+## Season [/season/{id}]
+A single Season's page with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Team to perform action with. Has example value.
+
+### Retrieve a Season [GET]
 + Response 200 (application/json)
 
     + Header
@@ -40,7 +122,4 @@ A single Note object with all its details
 
     + Body
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
-
-### Remove a Note [DELETE]
-+ Response 204
+            [{ "id": 2, "year": "2014-2015", ... }]
