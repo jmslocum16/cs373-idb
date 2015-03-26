@@ -127,7 +127,7 @@ class TestModels (TestCase) :
 	self.assertEqual(result.team_id, self.testTeamId)
 	self.assertEqual(result.gp, 2)
 
-    def test_stat_1(self) :
+    def test_stat_3(self) :
     	s = Session(self.Engine, expire_on_commit=False)
 	result = s.query(StatLine).filter(StatLine.stat_id > self.baseStatId).all()
 	s.close()
