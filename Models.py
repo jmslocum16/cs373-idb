@@ -5,7 +5,8 @@ from sqlalchemy import create_engine
 
 # TODO include relationship fields in attributes?
 
-"""
+class StatLine:
+	"""
 Stats model. Contains all of the statistics for a given stat line.
 Attributes:
    stat_id The unique id of this stat line.
@@ -38,38 +39,41 @@ Attributes:
    pts The average points scored per game during the season.
    plusminus The average plus/minus per game during the season.
 """
-StatLine = None
+	pass
 
-"""
+class Player:
+	"""
 Player Model. Contains all of the information for a specific player.
 Attributes:
     player_id The id of the player.
     name The name of the player.
     nba_team_team_id The team_id of the most recent team this player belongs to.
 """
-Player = None
+	pass
 
-"""
+class Team:
+	"""
 Team Model. Contains all of the information for a specific team.
 Attributes:
     team_id The id of the team.
     name The name of the team.
     abrv The three letter abbreviation the NBA uses for each team.
 """
-Team = None
+	pass
 
-"""
+class Season:
+	"""
 Season Model. Contains all of the information for a given season.
 Attributes:
     season_id The id of the season.
-"""
-Season = None
+	"""
+	pass
 
 
-"""
-Loads the model classes from sqlalchemy using automap.
-"""
 def loadModels() :
+    """
+    Loads the model classes from sqlalchemy using automap.
+    """
     global StatLine
     global Player
     global Team
