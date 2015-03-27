@@ -1,0 +1,368 @@
+commit f8382642a853979e7240a45284edce01e12d0021
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Mar 26 20:21:00 2015 -0500
+
+    added report and commit stats
+
+commit e9165a607218c86dc413d2f5791f1e7a282fa19c
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Thu Mar 26 20:13:57 2015 -0500
+
+    Added routes for photos and style.css
+
+commit 7bc3d3d6454624a9ab1bf1d3437d06d60a94e6f8
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Thu Mar 26 18:53:04 2015 -0500
+
+    Added about link on splash page. Added apiary link to about page
+
+commit 92d9c9bfe77044a35c1a1a7e9c62aa647f179783
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Mar 26 21:18:14 2015 +0000
+
+    Add tests.out; resolves #23
+
+commit 182d8cb313538fb84c6d2c2a25baab4058f79c7f
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Thu Mar 26 16:06:16 2015 -0500
+
+    Forgot Kevin(I) worked on the apiary api
+
+commit a1e41fa7ebbda1b718fb3460e2609365fd1e577f
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Mar 26 20:21:20 2015 +0000
+
+    Fix copy-pasta error
+
+commit 8664999a647a281839e8859e5dea5315d47c9d09
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Mar 26 20:05:20 2015 +0000
+
+    Change Models to have empty classes (for a better pydoc file)
+
+commit 48601b23be6f159e86e489ba318709a1acb16a87
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Thu Mar 26 14:48:38 2015 -0500
+
+    Transferring blueprint from apiary.io
+
+commit 90142733fad3d364f621a13e701494f26855232f
+Author: Ernesto Barajas <ernesto@wireless-10-145-168-71.public.utexas.edu>
+Date:   Thu Mar 26 11:27:56 2015 -0500
+
+    added links to static pages in splash.html.
+
+commit 9f5cde8ff4a9afb86b53d9df6fb1bace20577763
+Author: Ernesto Barajas <ernesto@wireless-10-145-168-71.public.utexas.edu>
+Date:   Thu Mar 26 11:20:35 2015 -0500
+
+    removed style_test.css
+
+commit d9319bee1e2dbb6713fbebe31bb96440fe2b3957
+Author: Ernesto Barajas <ernesto@wireless-10-145-168-71.public.utexas.edu>
+Date:   Thu Mar 26 11:19:44 2015 -0500
+
+    combined splash.html and about.html into index.html
+
+commit 634d502284313ac1811093bdc24e8394a805f589
+Author: Josh Slocum <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 23:10:44 2015 -0500
+
+    Transferring blueprint from apiary.io
+
+commit 7d035506784e88e5f44c9fe4fdf64269ab89b5c0
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Wed Mar 25 22:59:34 2015 -0500
+
+    added uml diagram
+
+commit fae604ed6146c42193887a413374b20db105ef3b
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Wed Mar 25 17:21:46 2015 -0500
+
+    Create pydoc file; resolves #2
+
+commit 3c9b442afd63b3ae44941b92f63778511ba211c1
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 22:02:49 2015 +0000
+
+    Add unit tests for Models
+
+commit 50119949621eac38cbcc14ccd34601e2525593fd
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 20:09:27 2015 +0000
+
+    Fix test models file
+
+commit 1ec594c1a0711eec4daec84357707d68984b0f84
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 12:56:28 2015 -0500
+
+    added field documentation to models
+
+commit 492c51280310fea232bde4e2922ad335b4d37551
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 16:33:43 2015 +0000
+
+    models and testmodels work! just need to write unit tests and documentation
+
+commit 8f0a0ca1cfd5401e689c5f0885fb7b2ffa3eda42
+Merge: af639e7 63b146b
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 16:19:47 2015 +0000
+
+    Merge branch 'master' of https://github.com/jmslocum16/cs373-idb
+
+commit af639e7ed2affe084435d9a69e5a9a1577ebce41
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 16:15:29 2015 +0000
+
+    ernesto changed app run config
+
+commit 63b146bdc0554778d6d1a6aed2e72790876430c4
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Mar 25 11:11:33 2015 -0500
+
+    added initial, untested models and unit tests
+
+commit 72689ab10c405779eadd1e18a8025cabca9a7aa9
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Tue Mar 24 23:45:36 2015 -0500
+
+    fixed typo in about.html
+
+commit ea6f836120d8d1699f967bcd12d7a62a1b45a87f
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Tue Mar 24 20:01:07 2015 -0500
+
+    added kevinh picture
+
+commit 8bbeb8a988514ade43dd3a0e4a17be38e9978b86
+Author: kesswein <kesswein@utexas.edu>
+Date:   Tue Mar 24 17:34:30 2015 -0500
+
+    Fixed team accordion sizes
+
+commit 57427f5032c79198cf1a03aaa8a2fdd23adeca00
+Author: kesswein <kesswein@utexas.edu>
+Date:   Tue Mar 24 16:58:12 2015 -0500
+
+    Fixed links
+
+commit fa3c7d74df1cb29628413d170e008c8dc004b7ec
+Author: kesswein <kesswein@utexas.edu>
+Date:   Tue Mar 24 16:42:48 2015 -0500
+
+    Delete team_template.html
+
+commit d8593a8fffcfd33c5f918aa7a994d70a5e068de6
+Author: kesswein <kesswein@utexas.edu>
+Date:   Tue Mar 24 16:10:46 2015 -0500
+
+    Dirk's stats
+
+commit e572647f2adbf984f60fb494f048d9c8e9bf05e4
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Tue Mar 24 15:57:28 2015 -0500
+
+    fixed static link on about page, resolves #22
+
+commit c9f0e5af6c2b6d4d933a89db52ef0b1ac28421ae
+Author: Ernesto Barajas <ernesto@wireless-10-147-192-3.public.utexas.edu>
+Date:   Tue Mar 24 13:04:48 2015 -0500
+
+    cleaned up about page a bit
+
+commit 93d1f1a03dd60d3983dc7f7e6c088c9a7a1641d9
+Author: Ernesto Barajas <ernesto@wireless-10-145-178-167.public.utexas.edu>
+Date:   Tue Mar 24 11:58:59 2015 -0500
+
+    added ernesto about
+
+commit 6177b039e020f9a02aabeac8d784adb2b9056225
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Tue Mar 24 02:18:13 2015 -0500
+
+    serve.py works locally, need to test it on the server.
+
+commit fa78dc30e95ade0c3e8c3478c6e3f5abf9476275
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 22:45:48 2015 -0500
+
+    added about kevin h section
+
+commit 2063a80e22667b74b7134ba5d4d8d922305c1fd5
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 21:47:25 2015 -0500
+
+    debugging serve.py is not returning static pages
+
+commit 7dccfda3416cc700b360c4daa729cd96fe73fce4
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 17:25:52 2015 -0500
+
+    initial commit for flask app
+
+commit c47f872015ad8c2e6bc250ba8c7111b4fea776e0
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 17:19:19 2015 -0500
+
+    James Harden page completed
+
+commit b5d1e1b7a3481f22b4c042e133e0d1ea011b584c
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:59:33 2015 -0500
+
+    2012 page had 2013 as the title
+
+commit 22ef975157781885ae2045659c1c9996d6e1705f
+Merge: ed2f0ce 7b87569
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:58:42 2015 -0500
+
+    Merged new changes with completed Tim Duncan page
+
+commit ed2f0ce4253ef4523819d9ef0c457f74b0442b81
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:55:50 2015 -0500
+
+    Tim Duncan page finished
+
+commit 7b875690852a90572e6c6e1e5a377fb38b303810
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Mar 23 16:48:43 2015 -0500
+
+    added responsibilities to the about page
+
+commit a937d71fbce35ac15a5c5293f443d92976f2eb24
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Mar 23 16:32:30 2015 -0500
+
+    added about page, just need to fill in photos/bios, and actual stats
+
+commit 0cf2799e52fdd41a05c869418bb7662b8780d723
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:27:53 2015 -0500
+
+    Tim Duncan html moved to static_html dir
+
+commit 511e822d1a21a22f935e5bb9bd098755112fc090
+Merge: 1150582 fe29ccf
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:22:30 2015 -0500
+
+    Merge branch 'master' of github.com:jmslocum16/cs373-idb
+
+commit 115058294ed3fa23829a950ff085b8e2850491f4
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Mon Mar 23 16:22:00 2015 -0500
+
+    Finished player template
+
+commit fe29ccfb614f4d2e6428a253cc747e36e46261ad
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Mon Mar 23 14:45:49 2015 -0500
+
+    Fix spelling: Nowitski -> Nowitzki
+
+commit 1efb22e1c2c52eca7190b188300d92a8183b726d
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Mon Mar 23 14:44:42 2015 -0500
+
+    Finish Teams static html pages for DAL, HOU and SAS
+
+commit 3b87bf8d254f5d6ff707e79819fbbc308a76a1f4
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Sun Mar 8 16:52:02 2015 -0500
+
+    Add initial team page look/feel for SAS (no data yet)
+
+commit c8487d6618e4df8d02f84bb1ddc6ac00dcaebf81
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Mar 8 16:28:32 2015 -0500
+
+    added complete seasons pages, added directory structure for static html pages, added stubs for player and season pages that have the top link back to the splash. Added stub for about page that links back to splash. Resolves #19
+
+commit 87338c42d3b4656ac42fbe8217fb0d6fa2cf61b4
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Sun Mar 8 16:31:00 2015 -0500
+
+    Accordion boundary does nto size to table
+
+commit 95741ab1e80b9996a5230afc91596747eece4dc5
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Sun Mar 8 15:46:57 2015 -0500
+
+    add style sheet test
+
+commit 65c1d2836ddf3615b28a5061bca55ebde95fd3f8
+Author: Ernesto Barajas <ernesto@wireless-10-147-21-93.public.utexas.edu>
+Date:   Sun Mar 8 15:44:08 2015 -0500
+
+    splash page test
+
+commit 587f2670098c32b8746fd59e8ea57adf3ff95cb5
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Mar 8 15:17:05 2015 -0500
+
+    added sorttable.js from kryogenix, made a sample stats-table.html that contains the data for the 2013-14 season page. Resolves #20
+
+commit f7e4ceb0f04b91c6fb2d9cf561b75a6485c7c8ba
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Sun Mar 8 14:56:57 2015 -0500
+
+    Working on player template
+
+commit c658a6b332874add4b6a7db58ab694c9cf72818c
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Sun Mar 8 13:37:34 2015 -0500
+
+    Add nested accordiaon example; resolves #15
+
+commit f90722177a49b16943ab9ed94d0727774d8b96d2
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Mon Mar 2 18:08:19 2015 +0000
+
+    added season_id dump to etl script
+
+commit 1c8d0a7aae8cdd213689fe4cf5ee62e0e3033123
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Mon Mar 2 17:30:01 2015 +0000
+
+    dumped stats, players, and team to db. need to eventually dump seasons
+
+commit 4c438b452a2e6e52a80b5eebc961ee96bbd026f6
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Mon Mar 2 16:55:20 2015 +0000
+
+    fixed insert statements. going to fix variable names
+
+commit 02dd8c6795774774154e293e3f0c567c1b8bcbc0
+Author: Joshua Slocum <jmslocum@cs.utexas.edu>
+Date:   Sun Mar 1 17:44:43 2015 -0600
+
+    added beginnings of static splash page.
+
+commit cdca254967a1a4c13d0be38af6f9427587646220
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Sun Mar 1 23:40:04 2015 +0000
+
+    Select error in etl script
+
+commit b4fc6ce6841416ba4693d682c3e6fee5eb201d9e
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Sun Mar 1 16:41:13 2015 -0600
+
+    Add abbreviation to data extraction. Resolves #14
+
+commit 04ecab459ab68d3eb2e493f78af759e01464c757
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Sun Mar 1 15:57:30 2015 -0600
+
+    Wrote etl program using NBA api. resolves #4
+
+commit f166b66b994121b6bba5c7d2576aaabe719c8d5e
+Author: Josh Slocum <jmslocum16@yahoo.com>
+Date:   Sun Mar 1 13:02:58 2015 -0600
+
+    Initial commit
