@@ -23,6 +23,10 @@ def about():
 def sorttable():
     return app.send_static_file('sorttable.js')
 
+@app.route('/style.css')
+def get_style():
+    return app.send_static_file('style.css')
+
 @app.route('/players/<player_id>')
 def get_player_page(player_id):
     static_file = 'players/' + player_id
@@ -40,6 +44,13 @@ def get_team_page(team_id):
     static_file = 'teams/' + team_id
     if os.path.isfile(STATIC_FOLDER + static_file):
         return app.send_static_file(static_file)
+
+@app.route('/photos/<photo_id>')
+def get_photo(photo_id):
+    static_file = 'photos/' + photo_id
+    if os.path.isfile(STATIC_FOLDER + static_file):
+        return app.send_static_file(static_file)
+
 
 if __name__ == "__main__":
     app.run('0.0.0.0')
