@@ -146,5 +146,18 @@ class TestModels (TestCase) :
         self.assertEqual(result.name, self.testTeamName)
 
 
+    def captureTestOutput() :
+        old_stdout = sys.stdout
+        sys.stdout = TextIOWrapper(BytesIO(), sys.stdout.encoding)
+
+        main()
+        sys.stdout.seek(0)
+        out = sys.stdout.read()
+
+        sys.stdout.close()
+        sys.stdout = old_stdout
+
+        return out
+
 if __name__ == "__main__":
     main()
