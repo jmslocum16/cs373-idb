@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.sql import select
 
 from unittest import TestCase, main
 
@@ -14,7 +13,7 @@ class TestModels (TestCase) :
 
     @classmethod
     def setUpClass(self) :
-        self.Engine = Models.loadModels()
+        self.Engine = Models.loadModels("/test")
     	global StatLine
     	global Player
     	global Team

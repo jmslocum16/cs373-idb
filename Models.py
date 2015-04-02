@@ -70,9 +70,10 @@ Attributes:
 	pass
 
 
-def loadModels() :
+def loadModels(database) :
     """
     Loads the model classes from sqlalchemy using automap.
+    database path of database to connect to
     """
     global StatLine
     global Player
@@ -81,7 +82,7 @@ def loadModels() :
 
     Base = automap_base()
 
-    Engine = create_engine("postgresql://postgres:nbaproject@23.253.119.99:5432/test")
+    Engine = create_engine("postgresql://postgres:nbaproject@23.253.119.99:5432" + database)
 
     # reflect the tables
     Base.prepare(Engine, reflect=True)
