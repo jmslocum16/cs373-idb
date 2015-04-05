@@ -196,11 +196,13 @@ def get_player_page(player_id):
 def get_season_page(season_id):
 # TODO - test when the database works again
 #    s = Session(self.Engine, expire_on_commit=False)
-#    stats = s.query(StatLine).filter(StatLine.season_id == season_id).all()
+#    stats = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id != None).all()
 #    teams = s.query(Team).all()
 #    s.close()
     stats = []
-    return render_template('season.html', stats=stats)
+    if (season_id.endswith('.html')):
+      season_id = season_id[:-5]
+    return render_template('season.html', stats=stats, season_id=int(season_id))
 
 @app.route('/teams/<team_id>')
 def get_team_page(team_id):

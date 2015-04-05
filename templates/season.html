@@ -2,14 +2,7 @@
 {% block body %}
 <body>
 
-<div id="logodiv">
-    <span style="margin-left:50px">
-        <img style="display: inline-block" src="http://i.cdn.turner.com/nba/tmpl_asset/static/nba-cms3-homepage/1567/elements/global/nba-logo.png">
-        <h1 style="display: inline-block">NBA Stats</h1>
-    </span>
-</div>
-
-<h1>2014 - 2015 Season</h1>
+<h1>{{ season_id }} - {{ season_id + 1 }} Season</h1>
 
 <h3>Standings</h3>
 
@@ -44,87 +37,35 @@
         </tr>
     </thead>
     <tbody>
+        {% for team in teams %}
         <tr>
-            <td><a href="../teams/SAS.html">San Antonio Spurs</a></td>
-            <td>36</td>
-            <td>23</td>
-            <td>0.61</td>
-            <td>48.8</td>
-            <td>37.9</td>
-            <td>83.5</td>
-            <td>8.3</td>
-            <td>22.9</td>
-            <td>0.36</td>
-            <td>16.6</td>
-            <td>21.5</td>
-            <td>0.772</td>
-            <td>10.1</td>
-            <td>33.7</td>
-            <td>43.8</td>
-            <td>24.1</td>
-            <td>14.3</td>
-            <td>7.6</td>
-            <td>5.4</td>
-            <td>4.7</td>
-            <td>19.3</td>
-            <td>19.8</td>
-            <td>100.6</td>
-            <td>3.5</td> 
+            <td><a href="../teams/{{ team.abrv.uppercase() }}.html">{{ team.name }}</a></td>
+            <td>{{team.wins}}</td>
+            <td>{{team.losses}}</td>
+            <td>{{team.pct}}</td>
+            <td>{{team.mins}}</td>
+            <td>{{team.fgm}}</td>
+            <td>{{team.fga}}</td>
+            <td>{{team.fg3m}}</td>
+            <td>{{team.fg3a}}</td>
+            <td>{{team.fg3pct}}</td>
+            <td>{{team.ftm}}</td>
+            <td>{{team.fta}}</td>
+            <td>{{team.ftpct}}</td>
+            <td>{{team.oreb}}</td>
+            <td>{{team.dreb}}</td>
+            <td>{{team.reb}}</td>
+            <td>{{team.ass}}</td>
+            <td>{{team.to}}</td>
+            <td>{{team.stl}}</td>
+            <td>{{team.blk}}</td>
+            <td>{{team.blka}}</td>
+            <td>{{team.pf}}</td>
+            <td>{{team.pfd}}</td>
+            <td>{{team.pts}}</td> 
+            <td>{{team.plusminus}}</td>
         </tr>
-        <tr>
-            <td><a href="../teams/HOU.html">Houston Rockets</a></td>
-            <td>41</td>
-            <td>18</td>
-            <td>0.695</td>
-            <td>48.4</td>
-            <td>36.8</td>
-            <td>83.9</td>
-            <td>11.7</td>
-            <td>33.8</td>
-            <td>0.347</td>
-            <td>18</td>
-            <td>25.1</td>
-            <td>0.719</td>
-            <td>12.2</td>
-            <td>31.5</td>
-            <td>43.7</td>
-            <td>21.8</td>
-            <td>17</td>
-            <td>9.7</td>
-            <td>4.8</td>
-            <td>5.3</td>
-            <td>22.7</td>
-            <td>20.7</td>
-            <td>103.3</td>
-            <td>3.6</td> 
-        </tr>
-        <tr>
-            <td><a href="../teams/DAL.html">Dallas Mavericks</a></td>
-            <td>39</td>
-            <td>22</td>
-            <td>0.639</td>
-            <td>48.5</td>
-            <td>39.6</td>
-            <td>85.7</td>
-            <td>9.5</td>
-            <td>26.8</td>
-            <td>0.353</td>
-            <td>16.5</td>
-            <td>21.7</td>
-            <td>0.761</td>
-            <td>10.7</td>
-            <td>31.7</td>
-            <td>42.4</td>
-            <td>22.8</td>
-            <td>12.7</td>
-            <td>8.2</td>
-            <td>4.8</td>
-            <td>3.6</td>
-            <td>19.7</td>
-            <td>21.7</td>
-            <td>105.3</td>
-            <td>4.6</td> 
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
