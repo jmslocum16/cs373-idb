@@ -2,11 +2,11 @@ import os.path
 
 import Models
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from sqlalchemy.orm import Session
 
 app = Flask(__name__, static_folder='static_html')
-app.debug = False
+app.debug = True
 
 STATIC_FOLDER = './static_html/'
 
@@ -143,13 +143,12 @@ def get_season_by_id(season_id):
     return jsonify({ "season_id" : season.season_id, "year" : season.season_id + "-" + str(int(season_id)+1) })
 
 # web endpoints
-@app.route('/')
-def root():
-    return app.send_static_file('splash.html')
 
+@app.route('/')
 @app.route('/splash.html')
 def splash():
-    return app.send_static_file('splash.html')
+    return render_template('splash_template.html')
+#    return app.send_static_file('splash.html')
 
 @app.route('/about.html')
 def about():
@@ -194,9 +193,9 @@ if __name__ == "__main__":
     global Team
     global Season
     global Engine
-    Engine = Models.loadModels("/test")
-    StatLine = Models.StatLine
-    Player = Models.Player
-    Team = Models.Team
-    Season = Models.Season
+    #Engine = Models.loadModels("/test")
+    #StatLine = Models.StatLine
+    #Player = Models.Player
+    #Team = Models.Team
+    #Season = Models.Season
     app.run('0.0.0.0')
