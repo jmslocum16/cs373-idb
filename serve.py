@@ -158,8 +158,7 @@ def get_season_by_id(season_id):
 @app.route('/')
 @app.route('/splash.html')
 def splash():
-    return render_template('splash_template.html')
-#    return app.send_static_file('splash.html')
+    return render_template('splash.html')
 
 @app.route('/about.html')
 def about():
@@ -175,21 +174,41 @@ def get_style():
 
 @app.route('/players/<player_id>')
 def get_player_page(player_id):
-    static_file = 'players/' + player_id
-    if os.path.isfile(STATIC_FOLDER + static_file):
-        return app.send_static_file(static_file)
+
+# TODO - test when the database works again
+#    s = Session(self.Engine, expire_on_commit=False)
+#    player = s.query(Player).get(player_id)
+#    stats = s.query(StatLine).filter(StatLine.player_id == player_id).all()
+#    team = s.query(Team).all()
+#    seasons = s.quert(Season).all()
+#    s.close()
+    seasons = ["2012", "2013", "2014"]
+    seasons = sorted(list(seasons), key=lambda x: int(x), reverse=True) #int(x.season_id), reverse=True)
+
+    season_to_abrv = {}
+     
+
+    return render_template('player.html', player={"name" : "Tim Duncan", "id" : player_id}, seasons=seasons, abrv=season_to_abrv)
 
 @app.route('/seasons/<season_id>')
 def get_season_page(season_id):
-    static_file = 'seasons/' + season_id
-    if os.path.isfile(STATIC_FOLDER + static_file):
-        return app.send_static_file(static_file)
+# TODO - test when the database works again
+#    s = Session(self.Engine, expire_on_commit=False)
+#    stats = s.query(StatLine).filter(StatLine.season_id == season_id).all()
+#    teams = s.query(Team).all()
+#    s.close()
+    stats = []
+    return render_template('season.html', stats=stats)
 
 @app.route('/teams/<team_id>')
 def get_team_page(team_id):
-    static_file = 'teams/' + team_id
-    if os.path.isfile(STATIC_FOLDER + static_file):
-        return app.send_static_file(static_file)
+# TODO - test when the database works again
+#    s = Session(self.Engine, expire_on_commit=False)
+#    team = s.query(Team).get(team_id)
+#    stats = s.query(StatLine).filter(StatLine.team_id == team_id).all()
+#    seasons = s.quert(Season).all()
+#    s.close()
+    return render_template('team.html')
 
 @app.route('/photos/<photo_id>')
 def get_photo(photo_id):
