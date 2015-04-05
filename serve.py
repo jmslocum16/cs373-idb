@@ -51,10 +51,10 @@ def statline_to_dict(line):
         "plusminus" : line.plusminus
         }
 
-def aggregateStatLines(lines, player_id = None, season_id = None):
+def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None):
     """
-    Aggregate a iterable of stat lines, for players who were traded during a season
-    lines an iterable of StatLines
+    Aggregate one or more stat line dictionaries into one stat line dictionary, for players who were traded during a season
+    lines an iterable of stat line dictionaries
     player_id a player_id to overwrite the result
     """
     result = {}
@@ -63,22 +63,33 @@ def aggregateStatLines(lines, player_id = None, season_id = None):
       for stat in line:
         if stat not in result and line[stat] != None:
           result[stat] = line[stat]
-        elif stat == "gp":
+        elif stat[-3:] == "pct" or stat == "player_id" or stat == "team_id" or stat == "season":
+          # ignore percent stats and non-numeric static
+          continue
+        elif stat == "gp" or stat == "wins" or stat == "losses":
+          # just add non-per game stats
           result[stat] += line[stat]
         else:
+          # do weighted average of per-game stats by games played
           result[stat] += (line[stat] * games_played)
+
     for stat in result:
-      if stat == "season_id":
+      if stat[-3:] == "pct" or stat == "player_id" or stat == "team_id" or stat == "season" or stat == "gp" or stat == "wins" or stat == "losses":
+        # ignore percents, non-numeric, and non per-game stats
         continue
+      # divide by total games played to convert to per-game average
       result[stat] /= result["gp"]
+
+    # manually set new percentages and non-numeric stats
     result["pct"] = result["wins"] / result["losses"]
     result["ftpct"] = result["ftm"] / result["fta"]
     result["fg3pct"] = result["fg3m"] / result["fg3a"]
     if player_id != None:
       result["player_id"] = player_id
+    if team_id != None :
+      result["team_id"] = team_id
     if season_id != None:
-      result["season_id"] = season_id
-    result["team_id"] = None
+      result["season"] = season_id
     return result
 
 # API endpoints

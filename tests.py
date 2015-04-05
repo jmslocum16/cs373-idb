@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 
+import serve
+
 from unittest import TestCase, main
 
 import Models
@@ -159,5 +161,183 @@ class TestModels (TestCase) :
 
         return out
 
+    """
+        Test player to dict
+    """
+    def test_player_to_dict1(self) :
+        p = Player(player_id = 1, name = "testname")
+        d = serve.player_to_dict(p)
+        self.assertEquals(d["player_id"], 1)
+        self.assertEquals(d["name"], "testname")
+
+    def test_player_to_dict2(self) :
+        p = Player(player_id = 2, name = None)
+        d = serve.player_to_dict(p)
+        self.assertEquals(d["player_id"], 2)
+        self.assertEquals(d["name"], None)
+
+    def test_player_to_dict3(self) :
+        p = Player(player_id = 0, name = "redundant")
+        d = serve.player_to_dict(p)
+        self.assertEquals(d["player_id"], 0)
+        self.assertEquals(d["name"], "redundant")
+
+    """
+        Test season to dict (Kevin)
+    """
+
+
+    """
+        Test statline to dict
+    """
+    def test_statline_to_dict_1(self) :
+        d = serve.statline_to_dict(self.stat_1)
+        self.assertEquals(d["stat_id"], self.stat_1.stat_id)
+        self.assertEquals(d["player_id"], self.stat_1.player_id)
+        self.assertEquals(d["team_id"], self.stat_1.team_id)
+        self.assertEquals(d["season"], self.stat_1.season)
+        self.assertEquals(d["gp"], self.stat_1.gp)
+        self.assertEquals(d["wins"], self.stat_1.wins)
+        self.assertEquals(d["losses"], self.stat_1.losses)
+        self.assertEquals(d["pct"], self.stat_1.pct)
+        self.assertEquals(d["mins"], self.stat_1.mins)
+        self.assertEquals(d["fgm"], self.stat_1.fgm)
+        self.assertEquals(d["fga"], self.stat_1.fga)
+        self.assertEquals(d["fg3m"], self.stat_1.fg3m)
+        self.assertEquals(d["fg3a"], self.stat_1.fg3a)
+        self.assertEquals(d["fg3pct"], self.stat_1.fg3pct)
+        self.assertEquals(d["ftm"], self.stat_1.ftm)
+        self.assertEquals(d["fta"], self.stat_1.fta)
+        self.assertEquals(d["ftpct"], self.stat_1.ftpct)
+        self.assertEquals(d["oreb"], self.stat_1.oreb)
+        self.assertEquals(d["dreb"], self.stat_1.dreb)
+        self.assertEquals(d["reb"], self.stat_1.reb)
+        self.assertEquals(d["ass"], self.stat_1.ass)
+        self.assertEquals(d["tov"], self.stat_1.tov)
+        self.assertEquals(d["stl"], self.stat_1.stl)
+        self.assertEquals(d["blk"], self.stat_1.blk)
+        self.assertEquals(d["blka"], self.stat_1.blka)
+        self.assertEquals(d["pf"], self.stat_1.pf)
+        self.assertEquals(d["pfd"], self.stat_1.pfa)
+        self.assertEquals(d["pts"], self.stat_1.pts)
+        self.assertEquals(d["plusminus"], self.stat_1.plusminus)
+    
+    def test_statline_to_dict_2(self) :
+        d = serve.statline_to_dict(self.stat_2)
+        self.assertEquals(d["stat_id"], self.stat_2.stat_id)
+        self.assertEquals(d["player_id"], self.stat_2.player_id)
+        self.assertEquals(d["team_id"], self.stat_2.team_id)
+        self.assertEquals(d["season"], self.stat_2.season)
+        self.assertEquals(d["gp"], self.stat_2.gp)
+        self.assertEquals(d["wins"], self.stat_2.wins)
+        self.assertEquals(d["losses"], self.stat_2.losses)
+        self.assertEquals(d["pct"], self.stat_2.pct)
+        self.assertEquals(d["mins"], self.stat_2.mins)
+        self.assertEquals(d["fgm"], self.stat_2.fgm)
+        self.assertEquals(d["fga"], self.stat_2.fga)
+        self.assertEquals(d["fg3m"], self.stat_2.fg3m)
+        self.assertEquals(d["fg3a"], self.stat_2.fg3a)
+        self.assertEquals(d["fg3pct"], self.stat_2.fg3pct)
+        self.assertEquals(d["ftm"], self.stat_2.ftm)
+        self.assertEquals(d["fta"], self.stat_2.fta)
+        self.assertEquals(d["ftpct"], self.stat_2.ftpct)
+        self.assertEquals(d["oreb"], self.stat_2.oreb)
+        self.assertEquals(d["dreb"], self.stat_2.dreb)
+        self.assertEquals(d["reb"], self.stat_2.reb)
+        self.assertEquals(d["ass"], self.stat_2.ass)
+        self.assertEquals(d["tov"], self.stat_2.tov)
+        self.assertEquals(d["stl"], self.stat_2.stl)
+        self.assertEquals(d["blk"], self.stat_2.blk)
+        self.assertEquals(d["blka"], self.stat_2.blka)
+        self.assertEquals(d["pf"], self.stat_2.pf)
+        self.assertEquals(d["pfd"], self.stat_2.pfa)
+        self.assertEquals(d["pts"], self.stat_2.pts)
+        self.assertEquals(d["plusminus"], self.stat_2.plusminus)
+
+    """
+        test aggregateStatLines
+    """
+    def test_aggregateStatLines_1(self) :
+        d = serve.aggregateStatLines([serve.statline_to_dict(self.stat_2)], self.stat_2.player_id, self.stat_2.team_id, self.stat_2.season_id)
+
+        self.assertEquals(d["stat_id"], self.stat_2.stat_id)
+        self.assertEquals(d["player_id"], self.stat_2.player_id)
+        self.assertEquals(d["team_id"], self.stat_2.team_id)
+        self.assertEquals(d["season"], self.stat_2.season_id)
+        self.assertEquals(d["gp"], self.stat_2.gp)
+        self.assertEquals(d["wins"], self.stat_2.wins)
+        self.assertEquals(d["losses"], self.stat_2.losses)
+        self.assertEquals(d["pct"], self.stat_2.pct)
+        self.assertEquals(d["mins"], self.stat_2.mins)
+        self.assertEquals(d["fgm"], self.stat_2.fgm)
+        self.assertEquals(d["fga"], self.stat_2.fga)
+        self.assertEquals(d["fg3m"], self.stat_2.fg3m)
+        self.assertEquals(d["fg3a"], self.stat_2.fg3a)
+        self.assertEquals(d["fg3pct"], self.stat_2.fg3pct)
+        self.assertEquals(d["ftm"], self.stat_2.ftm)
+        self.assertEquals(d["fta"], self.stat_2.fta)
+        self.assertEquals(d["ftpct"], self.stat_2.ftpct)
+        self.assertEquals(d["oreb"], self.stat_2.oreb)
+        self.assertEquals(d["dreb"], self.stat_2.dreb)
+        self.assertEquals(d["reb"], self.stat_2.reb)
+        self.assertEquals(d["ass"], self.stat_2.ass)
+        self.assertEquals(d["tov"], self.stat_2.tov)
+        self.assertEquals(d["stl"], self.stat_2.stl)
+        self.assertEquals(d["blk"], self.stat_2.blk)
+        self.assertEquals(d["blka"], self.stat_2.blka)
+        self.assertEquals(d["pf"], self.stat_2.pf)
+        self.assertEquals(d["pfd"], self.stat_2.pfa)
+        self.assertEquals(d["pts"], self.stat_2.pts)
+        self.assertEquals(d["plusminus"], self.stat_2.plusminus)
+
+    
+    def test_aggregateStatLines_2(self) :
+        d1 = serve.statline_to_dict(self.stat_1)
+        d2 = serve.statline_to_dict(self.stat_2)
+        d = serve.aggregateStatLines([d1, d2], d1["player_id"], d1["team_id"], d1["season_id"])
+
+        self.assertEquals(d["player_id"], d1["player_id"])
+        self.assertEquals(d["team_id"], d1["team_id"])
+        self.assertEquals(d["season"], d1["season"])
+        self.assertEquals(d["gp"], d1["gp"] + d2["gp"])
+        self.assertEquals(d["wins"],  d1["wins"] + d2["wins"])
+        self.assertEquals(d["losses"],  d1["losses"] + d2["losses"])
+
+
+    def test_aggregateStatLines_Commutative(self) :
+        d1 = serve.statline_to_dict(self.stat_1)
+        d2 = serve.statline_to_dict(self.stat_2)
+        d12 = serve.aggregateStatLines([d1, d2], d1["player_id"], d1["team_id"], d1["season"])
+        d21 = serve.aggregateStatLines([d2, d1], d2["player_id"], d2["team_id"], d2["season"])
+
+
+        self.assertEquals(d12["gp"], d21["gp"])
+        self.assertEquals(d12["wins"], d21["wins"])
+        self.assertEquals(d12["losses"], d21["losses"])
+        self.assertEquals(d12["pct"], d21["pct"])
+        self.assertEquals(d12["mins"], d21["mins"])
+        self.assertEquals(d12["fgm"], d21["fgm"])
+        self.assertEquals(d12["fga"], d21["fga"])
+        self.assertEquals(d12["fg3m"], d21["fg3m"])
+        self.assertEquals(d12["fg3a"], d21["fg3a"])
+        self.assertEquals(d12["fg3pct"], d21["fg3pct"])
+        self.assertEquals(d12["ftm"], d21["ftm"])
+        self.assertEquals(d12["fta"], d21["fta"])
+        self.assertEquals(d12["ftpct"], d21["ftpct"])
+        self.assertEquals(d12["oreb"], d21["oreb"])
+        self.assertEquals(d12["dreb"], d21["dreb"])
+        self.assertEquals(d12["reb"], d21["reb"])
+        self.assertEquals(d12["ass"], d21["ast"])
+        self.assertEquals(d12["tov"], d21["tov"])
+        self.assertEquals(d12["stl"], d21["stl"])
+        self.assertEquals(d12["blk"], d21["blk"])
+        self.assertEquals(d12["blka"], d21["blka"])
+        self.assertEquals(d12["pf"], d21["pf"])
+        self.assertEquals(d12["pfd"], d21["pfd"])
+        self.assertEquals(d12["pts"], d21["pts"])
+        self.assertEquals(d12["plusminus"], d21["plusminus"])
+
+ 
+
 if __name__ == "__main__":
-    main()
+    main
