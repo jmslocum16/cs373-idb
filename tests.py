@@ -424,8 +424,8 @@ def test_get_player_stats_for_season_1 (self):
 
 def test_get_player_stats_for_season_2 (self):
     result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
-    self.assertEquals(result["plusminus"], 1])
-    self.assertEquals(result["dreb"], 1])
+    self.assertEquals(result["plusminus"], 1)
+    self.assertEquals(result["dreb"], 1)
     self.assertEquals(result["team_id"], self.testTeamId)
 
 
