@@ -337,7 +337,113 @@ class TestModels (TestCase) :
         self.assertEquals(d12["pts"], d21["pts"])
         self.assertEquals(d12["plusminus"], d21["plusminus"])
 
- 
+
+def test_season_to_dict_1 (self):
+    result = serve.season_to_dict(self.season_1)
+    self.assertEquals(self.testSeason, result["season_id"])
+
+
+def test_season_to_dict_2 (self):
+    id = "1"
+    season = Season(season_id = id)
+    result = serve.season_to_dict(season)
+    self.assertEquals(id, result["season_id"])
+
+
+def test_season_to_dict_3 (self):
+    id = "3"
+    season = Season(season_id = id)
+    result = serve.season_to_dict(season)
+    self.assertEquals(id, result["season_id"])
+
+
+def test_team_to_dict_1 (self):
+    team = Team(team_id=10, name = "Houston", abrv="HOU")
+    result = serve.team_to_dict(team)
+    self.assertEquals(result["team_id"], 10)
+    self.assertEquals(result["name"], "Houston")
+
+
+def test_team_to_dict_2 (self):
+    result = serve.team_to_dict(self.team_1)
+    self.assertEquals(result["team_id"], -10)
+    self.assertEquals(result["name"], "Test Team")
+    self.assertEquals(result["abrv"], "TTT")
+
+
+def test_team_to_dict_3 (self):
+    team = Team(team_id=0, name = "Test", abrv="T")
+    result = serve.team_to_dict(team)
+    self.assertEquals(result["team_id"], 0)
+    self.assertEquals(result["name"], "Test")
+    self.assertEquals(result["abrv"], "T")
+
+
+def test_get_all_players_1 (self):
+    players = serve.get_all_players()
+    player_1_dict = serve.player_to_dict(self.player_1)
+    self.assertTrue(player_1_dict in players)
+
+
+def test_get_all_players_2 (self):
+    players = serve.get_all_players()
+    player = Player(name="Tim Duncan", player_id=1495)
+    player_dict = serve.player_to_dict(player)
+    self.assertTrue(player_dict in players)
+
+
+def test_get_all_players_3 (self):
+    players = serve.get_all_players()
+    player = Player(name="James Harden", player_id=201935)
+    player_dict = serve.player_to_dict(player)
+    self.assertTrue(player_dict in players)
+
+
+def test_get_player_by_id_1 (self):
+    player = serve.get_player_by_id(-10)
+    self.assertEquals(player["player_id"], -10)
+    self.assertEquals(player["name"], "Test Player")
+
+
+def test_get_player_by_id_2 (self):
+    player = serve.get_player_by_id(-20)
+    self.assertFalse(player)
+
+
+def test_get_player_by_id_3 (self):
+    player = serve.get_player_by_id(201935)
+    self.assertEquals(player["player_id"], 201935)
+    self.assertEquals(player["name"], "James Harden")
+
+
+def test_get_player_stats_for_season_1 (self):
+    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+    self.assertEquals(result["player_id"], self.testPlayerId)
+    self.assertEquals(result["losses"], 1)
+
+
+def test_get_player_stats_for_season_2 (self):
+    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+    self.assertEquals(result["plusminus"], 1]
+    self.assertEquals(result["dreb"], 1]
+    self.assertEquals(result["team_id"], self.testTeamId)
+
+
+def test_get_player_stats_for_season_3 (self):
+    result = serve.get_player_stats_for_season(player_id=201935, season_id="2013")
+    self.assertTrue(result)
+    self.assertEquals(result["gp"], 73)
+
+
+def test_get_all_teams_1 (self):
+    teams = serve.get_all_teams()
+    team_dict = serve.team_to_dict(self.team_1)
+    self.assertTrue(team_dict in teams)
+
+
+def test_get_all_teams_2 (self):
+    teams = serve.get_all_teams()
+    
 
 if __name__ == "__main__":
     main
