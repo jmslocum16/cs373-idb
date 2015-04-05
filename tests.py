@@ -34,14 +34,14 @@ class TestModels (TestCase) :
         self.testTeamName = "Test Team"
         self.testTeamAbbrev = "TTT"
 
-        self.season_1 = Season(season_id=self.testSeason)
+        self.season_1 = Season(season=self.testSeason)
         self.stat_1 =     StatLine(stat_id = self.baseStatId+1, player_id = self.testPlayerId, team_id = self.testTeamId, season = self.testSeason, gp = 1, wins = 1, losses = 1, pct = 1, mins = 1, fgm = 1, fga = 1, fg3m = 1, fg3a = 1, fg3pct = 1, ftm = 1, fta = 1, ftpct = 1, oreb = 1, dreb = 1, reb = 1, ass = 1, tov = 1, stl = 1, blk = 1, blka = 1, pf = 1, pfd = 1, pts = 1, plusminus = 1)
         self.stat_2 =     StatLine(stat_id = self.baseStatId+2, player_id = None, team_id = self.testTeamId, season = self.testSeason, gp = 2, wins = 2, losses = 2, pct = 2, mins = 2, fgm = 2, fga = 2, fg3m = 2, fg3a = 2, fg3pct = 2, ftm = 2, fta = 2, ftpct = 2, oreb = 2, dreb = 2, reb = 2, ass = 2, tov = 2, stl = 2, blk = 2, blka = 2, pf = 2, pfd = 2, pts = 2, plusminus = 2)
         self.player_1 = Player(player_id = self.testPlayerId, name = self.testPlayerName)
         self.team_1 =     Team(team_id = self.testTeamId, name = self.testTeamName, abrv = self.testTeamAbbrev)
 
         s = Session(self.Engine, expire_on_commit=False)
-        s.query(Season).filter(Season.season_id == self.testSeason).delete()
+        s.query(Season).filter(Season.season == self.testSeason).delete()
         s.query(StatLine).filter(StatLine.stat_id > self.baseStatId).delete()
         s.query(Player).filter(Player.player_id == self.testPlayerId).delete()
         s.query(Team).filter(Team.team_id == self.testTeamId).all()
@@ -74,8 +74,8 @@ class TestModels (TestCase) :
     def test_season_1(self) :
         s = Session(self.Engine, expire_on_commit=False)
         result = s.query(Season).get(self.testSeason)
-        self.assertEqual(result.season_id, self.season_1.season_id)
-        self.assertEqual(result.season_id, self.testSeason)
+        self.assertEqual(result.season, self.season_1.season)
+        self.assertEqual(result.season, self.testSeason)
         s.commit()
         s.close()
 
@@ -258,12 +258,12 @@ class TestModels (TestCase) :
         test aggregateStatLines
     """
     def test_aggregateStatLines_1(self) :
-        d = serve.aggregateStatLines([serve.statline_to_dict(self.stat_2)], self.stat_2.player_id, self.stat_2.team_id, self.stat_2.season_id)
+        d = serve.aggregateStatLines([serve.statline_to_dict(self.stat_2)], self.stat_2.player_id, self.stat_2.team_id, self.stat_2.season)
 
         self.assertEquals(d["stat_id"], self.stat_2.stat_id)
         self.assertEquals(d["player_id"], self.stat_2.player_id)
         self.assertEquals(d["team_id"], self.stat_2.team_id)
-        self.assertEquals(d["season"], self.stat_2.season_id)
+        self.assertEquals(d["season"], self.stat_2.season)
         self.assertEquals(d["gp"], self.stat_2.gp)
         self.assertEquals(d["wins"], self.stat_2.wins)
         self.assertEquals(d["losses"], self.stat_2.losses)
@@ -294,7 +294,7 @@ class TestModels (TestCase) :
     def test_aggregateStatLines_2(self) :
         d1 = serve.statline_to_dict(self.stat_1)
         d2 = serve.statline_to_dict(self.stat_2)
-        d = serve.aggregateStatLines([d1, d2], d1["player_id"], d1["team_id"], d1["season_id"])
+        d = serve.aggregateStatLines([d1, d2], d1["player_id"], d1["team_id"], d1["season"])
 
         self.assertEquals(d["player_id"], d1["player_id"])
         self.assertEquals(d["team_id"], d1["team_id"])
@@ -340,21 +340,21 @@ class TestModels (TestCase) :
 
 def test_season_to_dict_1 (self):
     result = serve.season_to_dict(self.season_1)
-    self.assertEquals(self.testSeason, result["season_id"])
+    self.assertEquals(self.testSeason, result["season"])
 
 
 def test_season_to_dict_2 (self):
     id = "1"
-    season = Season(season_id = id)
+    season = Season(season = id)
     result = serve.season_to_dict(season)
-    self.assertEquals(id, result["season_id"])
+    self.assertEquals(id, result["season"])
 
 
 def test_season_to_dict_3 (self):
     id = "3"
-    season = Season(season_id = id)
+    season = Season(season = id)
     result = serve.season_to_dict(season)
-    self.assertEquals(id, result["season_id"])
+    self.assertEquals(id, result["season"])
 
 
 def test_team_to_dict_1 (self):
@@ -417,20 +417,20 @@ def test_get_player_by_id_3 (self):
 
 
 def test_get_player_stats_for_season_1 (self):
-    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+    result = serve.get_player_stats_for_season(player_id=-10, season="1000")
     self.assertEquals(result["player_id"], self.testPlayerId)
     self.assertEquals(result["losses"], 1)
 
 
 def test_get_player_stats_for_season_2 (self):
-    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+    result = serve.get_player_stats_for_season(player_id=-10, season="1000")
     self.assertEquals(result["plusminus"], 1)
     self.assertEquals(result["dreb"], 1)
     self.assertEquals(result["team_id"], self.testTeamId)
 
 
 def test_get_player_stats_for_season_3 (self):
-    result = serve.get_player_stats_for_season(player_id=201935, season_id="2013")
+    result = serve.get_player_stats_for_season(player_id=201935, season="2013")
     self.assertTrue(result)
     self.assertEquals(result["gp"], 73)
 
