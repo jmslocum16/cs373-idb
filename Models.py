@@ -82,7 +82,7 @@ def loadModels(database) :
 
     Base = automap_base()
 
-    Engine = create_engine("postgresql://postgres:nbaproject@23.253.119.99:5432" + database)
+    Engine = create_engine("postgresql://postgres:nbaproject@23.253.227.227:5432" + database)
 
     # reflect the tables
     Base.prepare(Engine, reflect=True)
