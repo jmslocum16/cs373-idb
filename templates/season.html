@@ -39,31 +39,32 @@
     <tbody>
         {% for team in teams %}
         <tr>
-            <td><a href="../teams/{{ team.abrv.uppercase() }}.html">{{ team.name }}</a></td>
-            <td>{{team.wins}}</td>
-            <td>{{team.losses}}</td>
-            <td>{{team.pct}}</td>
-            <td>{{team.mins}}</td>
-            <td>{{team.fgm}}</td>
-            <td>{{team.fga}}</td>
-            <td>{{team.fg3m}}</td>
-            <td>{{team.fg3a}}</td>
-            <td>{{team.fg3pct}}</td>
-            <td>{{team.ftm}}</td>
-            <td>{{team.fta}}</td>
-            <td>{{team.ftpct}}</td>
-            <td>{{team.oreb}}</td>
-            <td>{{team.dreb}}</td>
-            <td>{{team.reb}}</td>
-            <td>{{team.ass}}</td>
-            <td>{{team.to}}</td>
-            <td>{{team.stl}}</td>
-            <td>{{team.blk}}</td>
-            <td>{{team.blka}}</td>
-            <td>{{team.pf}}</td>
-            <td>{{team.pfd}}</td>
-            <td>{{team.pts}}</td> 
-            <td>{{team.plusminus}}</td>
+            <td><a href="../teams/{{ team.team_id }}.html">{{ team.name }}</a></td>
+            {% set stat = abrv_to_stat[team.abrv] %}
+            <td>{{stat.wins}}</td>
+            <td>{{stat.losses}}</td>
+            <td>{{stat.pct}}</td>
+            <td>{{stat.mins}}</td>
+            <td>{{stat.fgm}}</td>
+            <td>{{stat.fga}}</td>
+            <td>{{stat.fg3m}}</td>
+            <td>{{stat.fg3a}}</td>
+            <td>{{stat.fg3pct}}</td>
+            <td>{{stat.ftm}}</td>
+            <td>{{stat.fta}}</td>
+            <td>{{stat.ftpct}}</td>
+            <td>{{stat.oreb}}</td>
+            <td>{{stat.dreb}}</td>
+            <td>{{stat.reb}}</td>
+            <td>{{stat.ass}}</td>
+            <td>{{stat.tov}}</td>
+            <td>{{stat.stl}}</td>
+            <td>{{stat.blk}}</td>
+            <td>{{stat.blka}}</td>
+            <td>{{stat.pf}}</td>
+            <td>{{stat.pfd}}</td>
+            <td>{{stat.pts}}</td> 
+            <td>{{stat.plusminus}}</td>
         </tr>
         {% endfor %}
     </tbody>

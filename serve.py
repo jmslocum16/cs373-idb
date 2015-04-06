@@ -6,7 +6,7 @@ from flask import Flask, jsonify, render_template
 from sqlalchemy.orm import Session
 
 app = Flask(__name__, static_folder='static_html')
-app.debug = True
+app.debug = False
 
 STATIC_FOLDER = './static_html/'
 
@@ -207,27 +207,54 @@ def get_player_page(player_id):
 def get_season_page(season_id):
     if (season_id.endswith('.html')):
       season_id = season_id[:-5]
-# TODO - test when the database works again
-#    s = Session(Engine, expire_on_commit=False)
-#    stats = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id != None).all()
-#    teams = s.query(Team).all()
-#    s.close()
-    stats = []
-    return render_template('season.html', stats=stats, season_id=int(season_id))
+    s = Session(Engine, expire_on_commit=False)
+    stats = s.query(StatLine).filter(StatLine.season == season_id and StatLine.team_id != None).all()
+    teams = s.query(Team).all()
+    s.close()
+    teams = sorted(teams, key=lambda x: x.name)
+    abrv_to_stat = {}
+    for team in teams:
+      abrv_to_stat[team.abrv] = list(filter(lambda x: x.team_id == team.team_id, stats))[0]
+    return render_template('season.html', stats=stats, season_id=int(season_id), teams=teams, abrv_to_stat=abrv_to_stat)
 
 @app.route('/teams/<team_id>')
 def get_team_page(team_id):
     if (team_id.endswith('.html')):
       team_id = team_id[:-5]
-# TODO - test when the database works again
-#    s = Session(Engine, expire_on_commit=False)
-#    team = s.query(Team).get(team_id)
-#    stats = s.query(StatLine).filter(StatLine.team_id == team_id).all()
-#    seasons = s.query(Season).all()
-#    s.close()
+    s = Session(Engine, expire_on_commit=False)
+    team = s.query(Team).get(team_id)
+    stats = s.query(StatLine).filter(StatLine.team_id == team_id).all()
+    seasons = s.query(Season).all()
+    players = s.query(Player).filter(Player.player_id.in_(map(lambda x: x.player_id, stats))).all()
+    s.close()
+    seasons = sorted(list(seasons), key=lambda x: int(x.season_id), reverse=True)
+    season_to_stat = { season : list(filter(lambda x: x.season == season, stats)) for season in map(lambda x: x.season_id, seasons) }
+    season_to_stat = { k : season_to_stat[k] for k in season_to_stat if season_to_stat[k] }
+    seasons = filter(lambda x: x.season_id in season_to_stat, seasons)
     total_wins = 0
     total_losses = 0
-    return render_template('team.html', total_wins=total_wins, total_losses=total_losses)
+    for k, l in season_to_stat.items():
+      for d in l:
+        if not d.player_id:
+          total_wins += d.wins
+          total_losses += d.losses
+    dsl = {}
+    for season in seasons:
+      num = int(season.season_id)
+      num %= 100
+      num -= num % 10
+      decade = "'" + str(num) + "-'" + str(num + 9)
+      if decade not in dsl:
+        dsl[decade] = {}
+      season_lines = filter(lambda x: x.season == season.season_id, stats)
+      dsl[decade][season.season_id] = { "team" : [], "player" : []}
+      for line in season_lines:
+        if line.player_id:
+          #print(next(filter(lambda x: x.player_id == line.player_id, player)))
+          dsl[decade][season.season_id]["player"].append((next(filter(lambda x: x.player_id == line.player_id, players)), line))
+        else:
+          dsl[decade][season.season_id]["team"].append(line)
+    return render_template('team.html', total_wins=total_wins, total_losses=total_losses, team=team, dsl=dsl)
 
 @app.route('/photos/<photo_id>')
 def get_photo(photo_id):

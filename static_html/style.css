@@ -98,3 +98,7 @@ header h1,header h2,header h3 a,header a,header a:hover {
 .panel {
 	border-width:0;
 }
+
+.season {
+  display: none;
+}
