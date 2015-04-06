@@ -58,6 +58,9 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
     player_id a player_id to overwrite the result
     """
     result = {}
+    lines = list(lines)
+    if len(lines) == 0:
+      return result
     for line in lines:
       games_played = line["gp"]
       for stat in line:
@@ -74,7 +77,6 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
         else:
           # do weighted average of per-game stats by games played
           result[stat] += (line[stat] * games_played)
-
     for stat in result:
       if stat[-3:] == "pct" or stat == "stat_id" or stat == "player_id" or stat == "team_id" or stat == "season" or stat == "gp" or stat == "wins" or stat == "losses":
         # ignore percents, non-numeric, and non per-game stats
@@ -84,9 +86,10 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
       result[stat] = round(result[stat], 2)
 
     # manually set new percentages and non-numeric stats
-    result["pct"] = round(float(result["wins"]) / float(result["losses"]))
-    result["ftpct"] = round(float(result["ftm"]) / float(result["fta"]))
-    result["fg3pct"] = round(float(result["fg3m"]) / float(result["fg3a"]))
+    result["pct"] = round(float(result["wins"]) / float(result["gp"]), 2) * 100 if result["gp"] > 0 else 0
+    result["ftpct"] = round(float(result["ftm"]) / float(result["fta"]), 2) * 100 if result["fta"] > 0 else 0
+    result["fgpct"] = round(float(result["fgm"]) / float(result["fga"]), 2) * 100 if result["fga"] > 0 else 0
+    result["fg3pct"] = round(float(result["fg3m"]) / float(result["fg3a"]), 2) * 100 if result["fg3a"] > 0 else 0
     if player_id != None:
       result["player_id"] = player_id
     if team_id != None :
@@ -167,7 +170,14 @@ def splash():
     seasons = s.query(Season).all()
     s.close()
     player_by_alphabet = {}
-    return render_template('splash.html', players=players, teams=teams, seasons=seasons)
+    for player in players:
+      letter = player.name.split(' ')[-1][0].lower()
+      if letter not in player_by_alphabet:
+        player_by_alphabet[letter] = []
+      player_by_alphabet[letter].append(player)
+    alphabet = sorted(player_by_alphabet.keys())
+    teams = sorted(teams, key=lambda x: x.name)
+    return render_template('splash.html', alphabet=alphabet, player_by_alphabet=player_by_alphabet, teams=teams, seasons=seasons)
 
 @app.route('/about.html')
 def about():
@@ -183,6 +193,8 @@ def get_style():
 
 @app.route('/players/<player_id>')
 def get_player_page(player_id):
+    if (player_id.endswith('.html')):
+      player_id = player_id[:-5]
     s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(player_id)
     stats = s.query(StatLine).filter(StatLine.player_id == player_id).all()
@@ -190,8 +202,10 @@ def get_player_page(player_id):
     team = s.query(Team).get(team_id)
     seasons = s.query(Season).all()
     s.close()
-    seasons = sorted(list(seasons), key=lambda x: int(x.season_id), reverse=True) #int(x.season_id), reverse=True)
+    seasons = sorted(list(seasons), key=lambda x: int(x.season_id), reverse=True)
     season_to_stat = { season : aggregateStatLines(filter(lambda x: x['season'] == season, map(lambda x: statline_to_dict(x), stats)), player_id, team_id, season) for season in map(lambda x: x.season_id, seasons) }
+    season_to_stat = { k : season_to_stat[k] for k in season_to_stat if season_to_stat[k] }
+    seasons = filter(lambda x: x.season_id in season_to_stat, seasons)
     return render_template('player.html', player=player, seasons=seasons, season_to_stat=season_to_stat, lower_abrv=team.abrv.lower(), upper_abrv=team.abrv.upper())
 
 @app.route('/seasons/<season_id>')

@@ -16,11 +16,10 @@
     <div class="tab-content">
         <div class="tab-pane fade active in" id="seasons-tab">
 	    <h1>Seasons</h1>
-        <a href="seasons/2012.html">2012</a>
-        <br/>
-        <a href="seasons/2013.html">2013</a>
-        <br/>
-        <a href="seasons/2014.html">2014</a>
+	      {% for season in seasons %}
+          <a href="seasons/{{ season.season_id }}.html">{{ season.season_id }}</a>
+          <br/>
+        {% endfor %}
         </div>
 	<div class="tab-pane fade" id="teams-tab">
 	    <h1>Teams</h1>
@@ -32,117 +31,29 @@
         <div class="tab-pane fade" id="players-tab">
         <div class="tabbable">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#players-a-tab">A</a></li>
-                    <li><a href="#players-b-tab">B</a></li>
-                    <li><a href="#players-c-tab">C</a></li>
-                    <li><a href="#players-d-tab">D</a></li>
-                    <li><a href="#players-e-tab">E</a></li>
-                    <li><a href="#players-f-tab">F</a></li>
-                    <li><a href="#players-g-tab">G</a></li>
-                    <li><a href="#players-h-tab">H</a></li>
-                    <li><a href="#players-i-tab">I</a></li>
-                    <li><a href="#players-j-tab">J</a></li>
-                    <li><a href="#players-k-tab">K</a></li>
-                    <li><a href="#players-l-tab">L</a></li>
-                    <li><a href="#players-m-tab">M</a></li>
-                    <li><a href="#players-n-tab">N</a></li>
-                    <li><a href="#players-o-tab">O</a></li>
-                    <li><a href="#players-p-tab">P</a></li>
-                    <li><a href="#players-q-tab">Q</a></li>
-                    <li><a href="#players-r-tab">R</a></li>
-                    <li><a href="#players-s-tab">S</a></li>
-                    <li><a href="#players-t-tab">T</a></li>
-                    <li><a href="#players-u-tab">U</a></li>
-                    <li><a href="#players-b-tab">V</a></li>
-                    <li><a href="#players-w-tab">W</a></li>
-                    <li><a href="#players-x-tab">X</a></li>
-                    <li><a href="#players-y-tab">Y</a></li>
-                    <li><a href="#players-z-tab">Z</a></li>
+                  {% for letter in alphabet %}
+                    {% if letter == 'a' %}
+                    <li class="active">
+                    {% else %}
+                    <li>
+                    {% endif %}
+                    <a href="#players-{{ letter }}-tab">{{ letter.upper() }}</a></li>
+                  {% endfor %}
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane fade active in" id="players-a-tab">
-                        <p>Kyle Anderson</p>
+                {% for letter in alphabet %}
+                  {% if letter == 'a' %}
+                    <div class="tab-pane fade active in" id="players-{{ letter }}-tab">
+                  {% else %}
+                    <div class="tab-pane fade" id="players-{{ letter }}-tab">
+                  {% endif %}
+                    {% for player in player_by_alphabet[letter] %}
+                        <a href="players/{{ player.player_id }}.html">{{ player.name }}</a>
+                        <br/>
+                    {% endfor %}
                     </div>
-                    <div class="tab-pane fade" id="players-b-tab">
-                        <p>Matt Bonner</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-c-tab">
-                        <p>DeMarcus Cousins</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-d-tab">
-                        <p>Anthony Davis</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-e-tab">
-                        <p>Dante Exum</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-f-tab">
-                        <p>Kenneth Faried</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-g-tab">
-                        <p>Marc Gasol</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-h-tab">
-                        <p>Roy Hibbert</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-i-tab">
-                        <p>Kyrie Irving</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-j-tab">
-                        <p>Lebron James</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-k-tab">
-                        <p>Kyle Korver</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-l-tab">
-                        <p>Zach Lavine</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-m-tab">
-                        <p>OJ Mayo</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-n-tab">
-                        <p>Nerlens Noel</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-o-tab">
-                        <p>Victor Oladipo</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-p-tab">
-                        <p>Tony Parker</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-q-tab">
-                    </div>
-                    <div class="tab-pane fade" id="players-r-tab">
-                        <p>Zach Randolph</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-s-tab">
-                        <p>Tiago Splitter</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-t-tab">
-                        <p>Jeff Teague</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-u-tab">
-                        <p>Beno Udrih</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-v-tab">
-                        <p>Anderson Varejao</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-w-tab">
-                        <p>Russell Westbrook</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-x-tab">
-                    </div>
-                    <div class="tab-pane fade" id="players-y-tab">
-                        <p>Swaggy P</p>
-                    </div>
-                    <div class="tab-pane fade" id="players-z-tab">
-                        <p>Cody Zeller</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-            <a href="players/DirkNowitzki.html">Dirk Nowitzki</a>
-            <br/>
-            <a href="players/JamesHarden.html">James Harden</a>
-            <br/>
-            <a href="players/TimDuncan.html">Tim Duncan</a>
         </div>
         <div class="tab-pane fade" id="about-tab">
             <h1><a href="about.html">About the team</a></h1>
