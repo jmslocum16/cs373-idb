@@ -419,16 +419,18 @@ class TestModels (TestCase) :
     """
     def test_get_player_by_id_1 (self):
         player = self.getJSON("/api/player/-5")
+        self.assertNotEqual(player, None)
         self.assertEqual(player["player_id"], -5)
         self.assertEqual(player["name"], "Test Player")
 
 
     def test_get_player_by_id_2 (self):
         player = self.getJSON("/api/player/-20")
-        self.assertFalse(player)
+        self.assertEqual(player, None)
    
     def test_get_player_by_id_3 (self):
         player = self.getJSON("/api/player/201935")
+        self.assertNotEqual(player, None)
         self.assertEqual(player["player_id"], 201935)
         self.assertEqual(player["name"], "James Harden")
 
@@ -439,13 +441,14 @@ class TestModels (TestCase) :
 
     def test_get_player_stats_for_season_1 (self):
         result = self.getJSON("/api/player/-10/season/1000")
+        self.assertNotEqual(result, None)
         self.assertEqual(result["player_id"], self.testPlayerId)
         self.assertEqual(result["losses"], 1)
 
 
     def test_get_player_stats_for_season_2 (self):
         result = self.getJSON("/api/player/-10/season/1000")
-        result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+        self.assertNotEqual(result, None)
         self.assertEqual(result["plusminus"], 1)
         self.assertEqual(result["dreb"], 1)
         self.assertEqual(result["team_id"], self.testTeamId)
@@ -453,7 +456,7 @@ class TestModels (TestCase) :
 
     def test_get_player_stats_for_season_3 (self):
         result = self.getJSON("/api/player/201935/season/2013")
-        self.assertTrue(result)
+        self.assertNotEqual(result, None)
         self.assertEqual(result["gp"], 73)
 
     """
@@ -483,21 +486,21 @@ class TestModels (TestCase) :
     """
     def test_get_team_by_id_1 (self):
         team = self.getJSON("/api/team/" + str(self.team_1.team_id))
-        self.assertEqual(team.team_id, self.team_1.team_id)
-        self.assertEqual(team.name, self.team_1.name)
-        self.assertEqual(team.abrv, self.team_1.abrv)
+        self.assertNotEqual(team, None)
+        self.assertEqual(team["team_id"], self.team_1.team_id)
+        self.assertEqual(team["name"], self.team_1.name)
+        self.assertEqual(team["abrv"], self.team_1.abrv)
 
     def test_get_team_by_id_2 (self):
         team = self.getJSON("/api/team/-1")
-        team = serve.get_team_by_id(-1)
-        assertEquals(team, None)
+        self.assertEqual(team, None)
 
     def test_get_team_by_id_3 (self):
         team = self.getJSON("/api/team/1610612759")
-        team = serve.get_team_by_id(1610612759)
-        self.assertEqual(team.team_id, 1610612759)
-        self.assertEqual(team.name, "San Antonio")
-        self.assertEqual(team.abrv, "SAS")
+        self.assertNotEqual(team, None)
+        self.assertEqual(team["team_id"], 1610612759)
+        self.assertEqual(team["name"], "San Antonio")
+        self.assertEqual(team["abrv"], "SAS")
 
 
 
