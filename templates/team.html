@@ -14,7 +14,7 @@
   <div class="row-fluid">
     <div class="col-xs-4">
       <h1>
-        San Antonio Spurs
+        {{ team.name }}
       </h1>
     </div>
     <div class="row-fluid">
@@ -26,6 +26,13 @@
     </div>
     <div class="col-xs-4">
       <img src="http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/sas.png" class="team-logo-img" width=200 height=200>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="col-xs-4 col-xs-offset-4">
+      <h1>
+        <em>{{ total_wins }} / {{ total_losses }}</em>
+      </h1>
     </div>
   </div>
 </div>

@@ -81,11 +81,12 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
         continue
       # divide by total games played to convert to per-game average
       result[stat] /= result["gp"]
+      result[stat] = round(result[stat], 2)
 
     # manually set new percentages and non-numeric stats
-    result["pct"] = result["wins"] / result["losses"]
-    result["ftpct"] = result["ftm"] / result["fta"]
-    result["fg3pct"] = result["fg3m"] / result["fg3a"]
+    result["pct"] = round(float(result["wins"]) / float(result["losses"]))
+    result["ftpct"] = round(float(result["ftm"]) / float(result["fta"]))
+    result["fg3pct"] = round(float(result["fg3m"]) / float(result["fg3a"]))
     if player_id != None:
       result["player_id"] = player_id
     if team_id != None :
@@ -97,21 +98,21 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
 # API endpoints
 @app.route('/api/players')
 def get_all_players():
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     players = s.query(Player).all()
     s.close()
     return jsonify({player_to_dict(player) for player in players})
 
 @app.route('/api/player/{player_id}')
 def get_player_by_id(player_id):
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(player_id)
     s.close()
     return jsonify(player_to_dict(player))
 
 @app.route('/api/player/{player_id}/season/{season_id}')
 def get_player_stats_for_season(player_id, season_id):
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(int(player_id))
     lines = s.query(StatLine).filter(StatLine.player_id == int(player_id) and StatLine.season_id == season_id).all()
     lines = map(lambda line: statline_to_dict(line), lines)
@@ -121,21 +122,21 @@ def get_player_stats_for_season(player_id, season_id):
 
 @app.route('/api/teams')
 def get_all_teams():
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     teams = s.query(Team).all()
     s.close()
     return jsonify({team_to_dict(team) for team in teams})
 
 @app.route('/api/team/{team_id}')
 def get_team_by_id(team_id):
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     team = s.query(Team).get(team_id)
     s.close()
     return jsonify({ "team_id" : team.team_id, "name" : team.name, "abrv" : team.abrv })
 
 @app.route('/api/team/{team_id}/season/{season_id}')
 def get_team_stats_for_season(team_id, season_id):
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     teams = s.query(Team).get(team_id)
     seasons = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id == team_id).all()
     s.close()
@@ -143,14 +144,14 @@ def get_team_stats_for_season(team_id, season_id):
 
 @app.route('/api/seasons')
 def get_all_seasons():
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     seasons = s.query(Season).all()
     s.close()
     return jsonify({season_to_dict(season) for season in seasons})
 
 @app.route('/api/season/{season_id}')
 def get_season_by_id(season_id):
-    s = Session(self.Engine, expire_on_commit=False)
+    s = Session(Engine, expire_on_commit=False)
     season = s.query(Season).get(season_id)
     s.close()
     return jsonify({ "season_id" : season.season_id, "year" : season.season_id + "-" + str(int(season_id)+1) })
@@ -160,7 +161,13 @@ def get_season_by_id(season_id):
 @app.route('/')
 @app.route('/splash.html')
 def splash():
-    return render_template('splash.html')
+    s = Session(Engine, expire_on_commit=False)
+    players = s.query(Player).all()
+    teams = s.query(Team).all()
+    seasons = s.query(Season).all()
+    s.close()
+    player_by_alphabet = {}
+    return render_template('splash.html', players=players, teams=teams, seasons=seasons)
 
 @app.route('/about.html')
 def about():
@@ -176,43 +183,42 @@ def get_style():
 
 @app.route('/players/<player_id>')
 def get_player_page(player_id):
-
-# TODO - test when the database works again
-#    s = Session(self.Engine, expire_on_commit=False)
-#    player = s.query(Player).get(player_id)
-#    stats = s.query(StatLine).filter(StatLine.player_id == player_id).all()
-#    team = s.query(Team).all()
-#    seasons = s.quert(Season).all()
-#    s.close()
-    seasons = ["2012", "2013", "2014"]
-    seasons = sorted(list(seasons), key=lambda x: int(x), reverse=True) #int(x.season_id), reverse=True)
-
-    season_to_abrv = {}
-     
-
-    return render_template('player.html', player={"name" : "Tim Duncan", "id" : player_id}, seasons=seasons, abrv=season_to_abrv)
+    s = Session(Engine, expire_on_commit=False)
+    player = s.query(Player).get(player_id)
+    stats = s.query(StatLine).filter(StatLine.player_id == player_id).all()
+    team_id = max(stats, key=lambda x: int(x.season)).team_id
+    team = s.query(Team).get(team_id)
+    seasons = s.query(Season).all()
+    s.close()
+    seasons = sorted(list(seasons), key=lambda x: int(x.season_id), reverse=True) #int(x.season_id), reverse=True)
+    season_to_stat = { season : aggregateStatLines(filter(lambda x: x['season'] == season, map(lambda x: statline_to_dict(x), stats)), player_id, team_id, season) for season in map(lambda x: x.season_id, seasons) }
+    return render_template('player.html', player=player, seasons=seasons, season_to_stat=season_to_stat, lower_abrv=team.abrv.lower(), upper_abrv=team.abrv.upper())
 
 @app.route('/seasons/<season_id>')
 def get_season_page(season_id):
+    if (season_id.endswith('.html')):
+      season_id = season_id[:-5]
 # TODO - test when the database works again
-#    s = Session(self.Engine, expire_on_commit=False)
+#    s = Session(Engine, expire_on_commit=False)
 #    stats = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id != None).all()
 #    teams = s.query(Team).all()
 #    s.close()
     stats = []
-    if (season_id.endswith('.html')):
-      season_id = season_id[:-5]
     return render_template('season.html', stats=stats, season_id=int(season_id))
 
 @app.route('/teams/<team_id>')
 def get_team_page(team_id):
+    if (team_id.endswith('.html')):
+      team_id = team_id[:-5]
 # TODO - test when the database works again
-#    s = Session(self.Engine, expire_on_commit=False)
+#    s = Session(Engine, expire_on_commit=False)
 #    team = s.query(Team).get(team_id)
 #    stats = s.query(StatLine).filter(StatLine.team_id == team_id).all()
-#    seasons = s.quert(Season).all()
+#    seasons = s.query(Season).all()
 #    s.close()
-    return render_template('team.html')
+    total_wins = 0
+    total_losses = 0
+    return render_template('team.html', total_wins=total_wins, total_losses=total_losses)
 
 @app.route('/photos/<photo_id>')
 def get_photo(photo_id):
@@ -227,9 +233,9 @@ if __name__ == "__main__":
     global Team
     global Season
     global Engine
-    #Engine = Models.loadModels("/test")
-    #StatLine = Models.StatLine
-    #Player = Models.Player
-    #Team = Models.Team
-    #Season = Models.Season
+    Engine = Models.loadModels("/nba")
+    StatLine = Models.StatLine
+    Player = Models.Player
+    Team = Models.Team
+    Season = Models.Season
     app.run('0.0.0.0')

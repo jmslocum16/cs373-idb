@@ -24,14 +24,13 @@
         </div>
 	<div class="tab-pane fade" id="teams-tab">
 	    <h1>Teams</h1>
-        <a href="teams/DAL.html">Dallas Mavericks</a>
-        <br/>
-        <a href="teams/HOU.html">Houston Rockets</a>
-        <br/>
-        <a href="teams/SAS.html">San Antonio Spurs</a>
+	      {% for team in teams %}
+        <a href="teams/{{ team.team_id }}.html">{{ team.name }}</a>
+        <br>
+        {% endfor %}
 	</div>	
         <div class="tab-pane fade" id="players-tab">
-<!--        <div class="tabbable">
+        <div class="tabbable">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#players-a-tab">A</a></li>
                     <li><a href="#players-b-tab">B</a></li>
@@ -138,7 +137,7 @@
                         <p>Cody Zeller</p>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <a href="players/DirkNowitzki.html">Dirk Nowitzki</a>
             <br/>
             <a href="players/JamesHarden.html">James Harden</a>
