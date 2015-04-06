@@ -1,31 +1,38 @@
 from sqlalchemy.orm import Session
 
+import json
 import serve
 
 from unittest import TestCase, main
 
 import Models
 
-StatLine = None
-Player = None
-Team = None
-Season = None
+#Engine = None
+#StatLine = None
+#Player = None
+#Team = None
+#Season = None
 
 class TestModels (TestCase) :
 
     @classmethod
     def setUpClass(self) :
-        self.Engine = Models.loadModels("/test")
-        global StatLine
-        global Player
-        global Team
-        global Season
-        StatLine = Models.StatLine
-        Player = Models.Player
-        Team = Models.Team
-        Season = Models.Season
+    #    global Engine
+    #    global StatLine
+    #    global Player
+    #    global Team
+    #    global Season
+
+    #    Engine = Models.loadModels("/test")
+    #    StatLine = Models.StatLine
+    #    Player = Models.Player
+    #    Team = Models.Team
+    #    Season = Models.Season
+        serve.init("/test")
 
     def setUp(self):
+        serve.app.config['Testing'] = True
+
         self.baseStatId = 1024*1024
         self.testSeason = "1000"
         self.testPlayerId = -5
@@ -34,21 +41,21 @@ class TestModels (TestCase) :
         self.testTeamName = "Test Team"
         self.testTeamAbbrev = "TTT"
 
-        self.season_1 = Season(season_id=self.testSeason)
-        self.stat_1 =     StatLine(stat_id = self.baseStatId+1, player_id = self.testPlayerId, team_id = self.testTeamId, season = self.testSeason, gp = 1, wins = 1, losses = 1, pct = 1, mins = 1, fgm = 1, fga = 1, fg3m = 1, fg3a = 1, fg3pct = 1, ftm = 1, fta = 1, ftpct = 1, oreb = 1, dreb = 1, reb = 1, ass = 1, tov = 1, stl = 1, blk = 1, blka = 1, pf = 1, pfd = 1, pts = 1, plusminus = 1)
-        self.stat_2 =     StatLine(stat_id = self.baseStatId+2, player_id = None, team_id = self.testTeamId, season = self.testSeason, gp = 2, wins = 2, losses = 2, pct = 2, mins = 2, fgm = 2, fga = 2, fg3m = 2, fg3a = 2, fg3pct = 2, ftm = 2, fta = 2, ftpct = 2, oreb = 2, dreb = 2, reb = 2, ass = 2, tov = 2, stl = 2, blk = 2, blka = 2, pf = 2, pfd = 2, pts = 2, plusminus = 2)
-        self.player_1 = Player(player_id = self.testPlayerId, name = self.testPlayerName)
-        self.team_1 =     Team(team_id = self.testTeamId, name = self.testTeamName, abrv = self.testTeamAbbrev)
+        self.season_1 = serve.Season(season_id=self.testSeason)
+        self.stat_1 =     serve.StatLine(stat_id = self.baseStatId+1, player_id = self.testPlayerId, team_id = self.testTeamId, season = self.testSeason, gp = 1, wins = 1, losses = 1, pct = 1, mins = 1, fgm = 1, fga = 1, fg3m = 1, fg3a = 1, fg3pct = 1, ftm = 1, fta = 1, ftpct = 1, oreb = 1, dreb = 1, reb = 1, ass = 1, tov = 1, stl = 1, blk = 1, blka = 1, pf = 1, pfd = 1, pts = 1, plusminus = 1)
+        self.stat_2 =     serve.StatLine(stat_id = self.baseStatId+2, player_id = None, team_id = self.testTeamId, season = self.testSeason, gp = 2, wins = 2, losses = 2, pct = 2, mins = 2, fgm = 2, fga = 2, fg3m = 2, fg3a = 2, fg3pct = 2, ftm = 2, fta = 2, ftpct = 2, oreb = 2, dreb = 2, reb = 2, ass = 2, tov = 2, stl = 2, blk = 2, blka = 2, pf = 2, pfd = 2, pts = 2, plusminus = 2)
+        self.player_1 = serve.Player(player_id = self.testPlayerId, name = self.testPlayerName)
+        self.team_1 =     serve.Team(team_id = self.testTeamId, name = self.testTeamName, abrv = self.testTeamAbbrev)
 
-        s = Session(self.Engine, expire_on_commit=False)
-        s.query(Season).filter(Season.season_id == self.testSeason).delete()
-        s.query(StatLine).filter(StatLine.stat_id > self.baseStatId).delete()
-        s.query(Player).filter(Player.player_id == self.testPlayerId).delete()
-        s.query(Team).filter(Team.team_id == self.testTeamId).all()
+        s = Session(serve.Engine, expire_on_commit=False)
+        s.query(serve.Season).filter(serve.Season.season_id == self.testSeason).delete()
+        s.query(serve.StatLine).filter(serve.StatLine.stat_id > self.baseStatId).delete()
+        s.query(serve.Player).filter(serve.Player.player_id == self.testPlayerId).delete()
+        s.query(serve.Team).filter(serve.Team.team_id == self.testTeamId).all()
         s.commit()
         s.close()
 
-        s = Session(self.Engine, expire_on_commit=False)
+        s = Session(serve.Engine, expire_on_commit=False)
         s.add(self.player_1)
         s.add(self.team_1)
         s.add(self.stat_1)
@@ -58,7 +65,7 @@ class TestModels (TestCase) :
         s.close()
 
     def tearDown(self) :
-        s = Session(self.Engine, expire_on_commit=False)
+        s = Session(serve.Engine, expire_on_commit=False)
         s.delete(self.season_1)
         s.delete(self.team_1)
         s.delete(self.stat_1)
@@ -72,8 +79,8 @@ class TestModels (TestCase) :
     """
 
     def test_season_1(self) :
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(Season).get(self.testSeason)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.Season).get(self.testSeason)
         self.assertEqual(result.season_id, self.season_1.season_id)
         self.assertEqual(result.season_id, self.testSeason)
         s.commit()
@@ -84,8 +91,8 @@ class TestModels (TestCase) :
     """
 
     def test_player_1(self) :
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(Player).get(self.testPlayerId)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.Player).get(self.testPlayerId)
         s.close()
         self.assertEqual(result.player_id, self.player_1.player_id)
         self.assertEqual(result.player_id, self.testPlayerId)
@@ -93,8 +100,8 @@ class TestModels (TestCase) :
         self.assertEqual(result.name, self.testPlayerName)
 
     def test_player_2(self) :
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(Player).filter(Player.player_id == self.testPlayerId)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.Player).filter(serve.Player.player_id == self.testPlayerId)
         s.close()
         for row in result:
             self.assertEqual(row.player_id, self.player_1.player_id)
@@ -108,8 +115,8 @@ class TestModels (TestCase) :
 
     def test_stat_1(self) :
         expected_id = self.baseStatId + 1
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(StatLine).get(expected_id)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.StatLine).get(expected_id)
         s.close()
         self.assertEqual(result.stat_id, expected_id)
         self.assertEqual(result.stat_id, self.stat_1.stat_id)
@@ -119,8 +126,8 @@ class TestModels (TestCase) :
 
     def test_stat_2(self) :
         expected_id = self.baseStatId + 2
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(StatLine).get(expected_id)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.StatLine).get(expected_id)
         s.close()
         self.assertEqual(result.stat_id, expected_id)
         self.assertEqual(result.stat_id, self.stat_2.stat_id)
@@ -129,8 +136,8 @@ class TestModels (TestCase) :
         self.assertEqual(result.gp, 2)
 
     def test_stat_3(self) :
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(StatLine).filter(StatLine.stat_id > self.baseStatId).all()
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.StatLine).filter(serve.StatLine.stat_id > self.baseStatId).all()
         s.close()
         for row in result:
             self.assertTrue(row.stat_id > self.baseStatId)
@@ -140,51 +147,82 @@ class TestModels (TestCase) :
     """
 
     def test_team_1(self) :
-        s = Session(self.Engine, expire_on_commit=False)
-        result = s.query(Team).get(self.testTeamId)
+        s = Session(serve.Engine, expire_on_commit=False)
+        result = s.query(serve.Team).get(self.testTeamId)
         s.close()
         self.assertEqual(result.team_id, self.testTeamId)
         self.assertEqual(result.team_id, self.team_1.team_id)
         self.assertEqual(result.name, self.testTeamName)
 
 
-    def captureTestOutput() :
-        old_stdout = sys.stdout
-        sys.stdout = TextIOWrapper(BytesIO(), sys.stdout.encoding)
-
-        main()
-        sys.stdout.seek(0)
-        out = sys.stdout.read()
-
-        sys.stdout.close()
-        sys.stdout = old_stdout
-
-        return out
-
     """
         Test player to dict
     """
     def test_player_to_dict1(self) :
-        p = Player(player_id = 1, name = "testname")
+        p = serve.Player(player_id = 1, name = "testname")
         d = serve.player_to_dict(p)
         self.assertEqual(d["player_id"], 1)
         self.assertEqual(d["name"], "testname")
 
     def test_player_to_dict2(self) :
-        p = Player(player_id = 2, name = None)
+        p = serve.Player(player_id = 2, name = None)
         d = serve.player_to_dict(p)
         self.assertEqual(d["player_id"], 2)
         self.assertEqual(d["name"], None)
 
     def test_player_to_dict3(self) :
-        p = Player(player_id = 0, name = "redundant")
+        p = serve.Player(player_id = 0, name = "redundant")
         d = serve.player_to_dict(p)
         self.assertEqual(d["player_id"], 0)
         self.assertEqual(d["name"], "redundant")
 
     """
-        Test season to dict (Kevin)
+        Test season to dict
     """
+
+    def test_season_to_dict_1 (self):
+        result = serve.season_to_dict(self.season_1)
+        self.assertEqual(self.testSeason, result["season_id"])
+
+
+    def test_season_to_dict_2 (self):
+        id = "1"
+        season = serve.Season(season_id = id)
+        result = serve.season_to_dict(season)
+        self.assertEqual(id, result["season_id"])
+
+
+    def test_season_to_dict_3 (self):
+        id = "3"
+        season = serve.Season(season_id = id)
+        result = serve.season_to_dict(season)
+        self.assertEqual(id, result["season_id"])
+
+
+    """
+        Test team to dict
+    """
+
+    def test_team_to_dict_1 (self):
+        team = serve.Team(team_id=10, name = "Houston", abrv="HOU")
+        result = serve.team_to_dict(team)
+        self.assertEqual(result["team_id"], 10)
+        self.assertEqual(result["name"], "Houston")
+
+
+    def test_team_to_dict_2 (self):
+        result = serve.team_to_dict(self.team_1)
+        self.assertEqual(result["team_id"], -10)
+        self.assertEqual(result["name"], "Test Team")
+        self.assertEqual(result["abrv"], "TTT")
+
+
+    def test_team_to_dict_3 (self):
+        team = serve.Team(team_id=0, name = "Test", abrv="T")
+        result = serve.team_to_dict(team)
+        self.assertEqual(result["team_id"], 0)
+        self.assertEqual(result["name"], "Test")
+        self.assertEqual(result["abrv"], "T")
 
 
     """
@@ -337,112 +375,165 @@ class TestModels (TestCase) :
         self.assertEqual(d12["plusminus"], d21["plusminus"])
 
 
-def test_season_to_dict_1 (self):
-    result = serve.season_to_dict(self.season_1)
-    self.assertEqual(self.testSeason, result["season_id"])
+    """
+        JSON API tests
+    """
+
+    def getJSON(self, url) :
+        with serve.app.test_client() as a:
+            print("requesting url " + url)
+            resp = a.get(url)
+            datastr = resp.get_data(as_text=True)
+            print(datastr)
+            data = json.loads(datastr)
+            return data["response"]
+        return None
+        
+
+    """
+        Get all players Test
+    """
+    def test_get_all_players_1 (self):
+        players = self.getJSON("/api/players")
+        player_1_dict = serve.player_to_dict(self.player_1)
+        self.assertTrue(player_1_dict in players)
 
 
-def test_season_to_dict_2 (self):
-    id = "1"
-    season = Season(season_id = id)
-    result = serve.season_to_dict(season)
-    self.assertEqual(id, result["season_id"])
+    def test_get_all_players_2 (self):
+        players = self.getJSON("/api/players")
+        print(players)
+        player = serve.Player(name="Tim Duncan", player_id=1495)
+        player_dict = serve.player_to_dict(player)
+        self.assertTrue(player_dict in players)
 
 
-def test_season_to_dict_3 (self):
-    id = "3"
-    season = Season(season_id = id)
-    result = serve.season_to_dict(season)
-    self.assertEqual(id, result["season_id"])
+    def test_get_all_players_3 (self):
+        players = self.getJSON("/api/players")
+        player = serve.Player(name="James Harden", player_id=201935)
+        player_dict = serve.player_to_dict(player)
+        self.assertTrue(player_dict in players)
 
 
-def test_team_to_dict_1 (self):
-    team = Team(team_id=10, name = "Houston", abrv="HOU")
-    result = serve.team_to_dict(team)
-    self.assertEqual(result["team_id"], 10)
-    self.assertEqual(result["name"], "Houston")
+    """
+        Get individual player test
+    """
+    def test_get_player_by_id_1 (self):
+        player = self.getJSON("/api/player/-5")
+        self.assertEqual(player["player_id"], -5)
+        self.assertEqual(player["name"], "Test Player")
 
 
-def test_team_to_dict_2 (self):
-    result = serve.team_to_dict(self.team_1)
-    self.assertEqual(result["team_id"], -10)
-    self.assertEqual(result["name"], "Test Team")
-    self.assertEqual(result["abrv"], "TTT")
+    def test_get_player_by_id_2 (self):
+        player = self.getJSON("/api/player/-20")
+        self.assertFalse(player)
+   
+    def test_get_player_by_id_3 (self):
+        player = self.getJSON("/api/player/201935")
+        self.assertEqual(player["player_id"], 201935)
+        self.assertEqual(player["name"], "James Harden")
 
 
-def test_team_to_dict_3 (self):
-    team = Team(team_id=0, name = "Test", abrv="T")
-    result = serve.team_to_dict(team)
-    self.assertEqual(result["team_id"], 0)
-    self.assertEqual(result["name"], "Test")
-    self.assertEqual(result["abrv"], "T")
+    """
+        Get all player stats for season
+    """
+
+    def test_get_player_stats_for_season_1 (self):
+        result = self.getJSON("/api/player/-10/season/1000")
+        self.assertEqual(result["player_id"], self.testPlayerId)
+        self.assertEqual(result["losses"], 1)
 
 
-def test_get_all_players_1 (self):
-    players = serve.get_all_players()
-    player_1_dict = serve.player_to_dict(self.player_1)
-    self.assertTrue(player_1_dict in players)
+    def test_get_player_stats_for_season_2 (self):
+        result = self.getJSON("/api/player/-10/season/1000")
+        result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
+        self.assertEqual(result["plusminus"], 1)
+        self.assertEqual(result["dreb"], 1)
+        self.assertEqual(result["team_id"], self.testTeamId)
 
 
-def test_get_all_players_2 (self):
-    players = serve.get_all_players()
-    player = Player(name="Tim Duncan", player_id=1495)
-    player_dict = serve.player_to_dict(player)
-    self.assertTrue(player_dict in players)
+    def test_get_player_stats_for_season_3 (self):
+        result = self.getJSON("/api/player/201935/season/2013")
+        self.assertTrue(result)
+        self.assertEqual(result["gp"], 73)
+
+    """
+        Get all teams
+    """
+
+    def test_get_all_teams_1 (self):
+        teams = self.getJSON("/api/teams")
+        team_dict = serve.team_to_dict(self.team_1)
+        self.assertTrue(team_dict in teams)
 
 
-def test_get_all_players_3 (self):
-    players = serve.get_all_players()
-    player = Player(name="James Harden", player_id=201935)
-    player_dict = serve.player_to_dict(player)
-    self.assertTrue(player_dict in players)
-
-
-def test_get_player_by_id_1 (self):
-    player = serve.get_player_by_id(-10)
-    self.assertEqual(player["player_id"], -10)
-    self.assertEqual(player["name"], "Test Player")
-
-
-def test_get_player_by_id_2 (self):
-    player = serve.get_player_by_id(-20)
-    self.assertFalse(player)
-
-
-def test_get_player_by_id_3 (self):
-    player = serve.get_player_by_id(201935)
-    self.assertEqual(player["player_id"], 201935)
-    self.assertEqual(player["name"], "James Harden")
-
-
-def test_get_player_stats_for_season_1 (self):
-    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
-    self.assertEqual(result["player_id"], self.testPlayerId)
-    self.assertEqual(result["losses"], 1)
-
-
-def test_get_player_stats_for_season_2 (self):
-    result = serve.get_player_stats_for_season(player_id=-10, season_id="1000")
-    self.assertEqual(result["plusminus"], 1)
-    self.assertEqual(result["dreb"], 1)
-    self.assertEqual(result["team_id"], self.testTeamId)
-
-
-def test_get_player_stats_for_season_3 (self):
-    result = serve.get_player_stats_for_season(player_id=201935, season_id="2013")
-    self.assertTrue(result)
-    self.assertEqual(result["gp"], 73)
-
-
-def test_get_all_teams_1 (self):
-    teams = serve.get_all_teams()
-    team_dict = serve.team_to_dict(self.team_1)
-    self.assertTrue(team_dict in teams)
-
-
-def test_get_all_teams_2 (self):
-    teams = serve.get_all_teams()
+    def test_get_all_teams_2 (self):
+        teams = self.getJSON("/api/teams")
+        team = serve.Team(team_id = 1610612745, name = "Houston", abrv = "HOU")
+        team_dict = serve.team_to_dict(team)
+        self.assertTrue(team_dict in teams)
     
+    def test_get_all_teams_3 (self):
+        teams = self.getJSON("/api/teams")
+        team = serve.Team(team_id = 1610612759, name = "San Antonio", abrv = "SAS")
+        team_dict = serve.team_to_dict(team)
+        self.assertTrue(team_dict in teams)
+    
+    """
+        Get Team By Id
+    """
+    def test_get_team_by_id_1 (self):
+        team = self.getJSON("/api/team/" + str(self.team_1.team_id))
+        self.assertEqual(team.team_id, self.team_1.team_id)
+        self.assertEqual(team.name, self.team_1.name)
+        self.assertEqual(team.abrv, self.team_1.abrv)
+
+    def test_get_team_by_id_2 (self):
+        team = self.getJSON("/api/team/-1")
+        team = serve.get_team_by_id(-1)
+        assertEquals(team, None)
+
+    def test_get_team_by_id_3 (self):
+        team = self.getJSON("/api/team/1610612759")
+        team = serve.get_team_by_id(1610612759)
+        self.assertEqual(team.team_id, 1610612759)
+        self.assertEqual(team.name, "San Antonio")
+        self.assertEqual(team.abrv, "SAS")
+
+
+
+
+
+    """
+        Get team stats for season
+    """
+
+
+    """
+        Get all seasons
+    """
+
+
+    """
+        Get season by id
+    """
+
+    """
+        utility function used for unit test webpage
+    """
+    def captureTestOutput() :
+        old_stdout = sys.stdout
+        sys.stdout = TextIOWrapper(BytesIO(), sys.stdout.encoding)
+
+        main()
+        sys.stdout.seek(0)
+        out = sys.stdout.read()
+
+        sys.stdout.close()
+        sys.stdout = old_stdout
+
+        return out
+
+
 
 if __name__ == "__main__":
     main()

@@ -104,16 +104,16 @@ def get_all_players():
     s = Session(Engine, expire_on_commit=False)
     players = s.query(Player).all()
     s.close()
-    return jsonify({player_to_dict(player) for player in players})
+    return jsonify(response=[player_to_dict(player) for player in players])
 
-@app.route('/api/player/{player_id}')
+@app.route('/api/player/<player_id>')
 def get_player_by_id(player_id):
     s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(player_id)
     s.close()
-    return jsonify(player_to_dict(player))
+    return jsonify(response=player_to_dict(player))
 
-@app.route('/api/player/{player_id}/season/{season_id}')
+@app.route('/api/player/<player_id>/season/<season_id>')
 def get_player_stats_for_season(player_id, season_id):
     s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(int(player_id))
@@ -121,43 +121,44 @@ def get_player_stats_for_season(player_id, season_id):
     lines = map(lambda line: statline_to_dict(line), lines)
     lines = aggregateStatLines(lines, player_id, season_id)
     s.close()
-    return jsonify(lines)
+    return jsonify(response=lines[0])
 
 @app.route('/api/teams')
 def get_all_teams():
     s = Session(Engine, expire_on_commit=False)
     teams = s.query(Team).all()
     s.close()
-    return jsonify({team_to_dict(team) for team in teams})
+    return jsonify(response=[team_to_dict(team) for team in teams])
 
-@app.route('/api/team/{team_id}')
+@app.route('/api/team/<team_id>')
 def get_team_by_id(team_id):
     s = Session(Engine, expire_on_commit=False)
     team = s.query(Team).get(team_id)
     s.close()
-    return jsonify({ "team_id" : team.team_id, "name" : team.name, "abrv" : team.abrv })
+    return jsonify(response=team_to_dict(team))
 
-@app.route('/api/team/{team_id}/season/{season_id}')
+@app.route('/api/team/<team_id>/season/<season_id>')
 def get_team_stats_for_season(team_id, season_id):
     s = Session(Engine, expire_on_commit=False)
     teams = s.query(Team).get(team_id)
     seasons = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id == team_id).all()
+    assert len(seasons) == 1
     s.close()
-    return jsonify({"result" : seasons})
+    return jsonify(response=seasons[0])
 
 @app.route('/api/seasons')
 def get_all_seasons():
     s = Session(Engine, expire_on_commit=False)
     seasons = s.query(Season).all()
     s.close()
-    return jsonify({season_to_dict(season) for season in seasons})
+    return jsonify(response=[season_to_dict(season) for season in seasons])
 
 @app.route('/api/season/{season_id}')
 def get_season_by_id(season_id):
     s = Session(Engine, expire_on_commit=False)
     season = s.query(Season).get(season_id)
     s.close()
-    return jsonify({ "season_id" : season.season_id, "year" : season.season_id + "-" + str(int(season_id)+1) })
+    return jsonify(response={ "season_id" : season.season_id, "year" : season.season_id + "-" + str(int(season_id)+1) })
 
 # web endpoints
 
@@ -240,16 +241,20 @@ def get_photo(photo_id):
     if os.path.isfile(STATIC_FOLDER + static_file):
         return app.send_static_file(static_file)
 
-if __name__ == "__main__":
-    #TODO - not test...
+def init(path) :
     global StatLine
     global Player
     global Team
     global Season
     global Engine
-    Engine = Models.loadModels("/nba")
+    Engine = Models.loadModels(path)
     StatLine = Models.StatLine
     Player = Models.Player
     Team = Models.Team
     Season = Models.Season
+    
+
+if __name__ == "__main__":
+    #TODO - not test...
+    init("/nba")
     app.run('0.0.0.0')
