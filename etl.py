@@ -69,7 +69,7 @@ def extract():
     "playerStats" : [ Player(), Player(), ... ]    # list of individual stats
   }
   """
-  for year in range(2014, 2015):
+  for year in range(2012, 2015):
     result[str(year)] = {}
     teamsRequestString = TEAMS_BY_SEASON_URL % (year, (year + 1) % 100)
     if DEBUG:

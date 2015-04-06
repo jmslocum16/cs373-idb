@@ -23,7 +23,7 @@ def statline_to_dict(line):
     return { "stat_id" : line.stat_id,
         "player_id" : line.player_id,
         "team_id" : line.team_id,
-        "season" : line.season_id,
+        "season" : line.season,
         "gp" : line.gp,
         "wins" : line.wins,
         "losses" : line.losses,
@@ -61,11 +61,13 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
     for line in lines:
       games_played = line["gp"]
       for stat in line:
-        if stat not in result and line[stat] != None:
-          result[stat] = line[stat]
-        elif stat[-3:] == "pct" or stat == "player_id" or stat == "team_id" or stat == "season":
+        if stat[-3:] == "pct" or stat == "stat_id" or stat == "player_id" or stat == "team_id" or stat == "season":
           # ignore percent stats and non-numeric static
           continue
+        if stat not in result and line[stat] != None:
+          result[stat] = line[stat]
+          if (stat != "gp" and stat != "wins" and stat != "losses") :
+            result[stat] *= games_played
         elif stat == "gp" or stat == "wins" or stat == "losses":
           # just add non-per game stats
           result[stat] += line[stat]
@@ -74,7 +76,7 @@ def aggregateStatLines(lines, player_id = None, team_id = None, season_id = None
           result[stat] += (line[stat] * games_played)
 
     for stat in result:
-      if stat[-3:] == "pct" or stat == "player_id" or stat == "team_id" or stat == "season" or stat == "gp" or stat == "wins" or stat == "losses":
+      if stat[-3:] == "pct" or stat == "stat_id" or stat == "player_id" or stat == "team_id" or stat == "season" or stat == "gp" or stat == "wins" or stat == "losses":
         # ignore percents, non-numeric, and non per-game stats
         continue
       # divide by total games played to convert to per-game average
