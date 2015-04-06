@@ -7,27 +7,10 @@ from unittest import TestCase, main
 
 import Models
 
-#Engine = None
-#StatLine = None
-#Player = None
-#Team = None
-#Season = None
-
 class TestModels (TestCase) :
 
     @classmethod
     def setUpClass(self) :
-    #    global Engine
-    #    global StatLine
-    #    global Player
-    #    global Team
-    #    global Season
-
-    #    Engine = Models.loadModels("/test")
-    #    StatLine = Models.StatLine
-    #    Player = Models.Player
-    #    Team = Models.Team
-    #    Season = Models.Season
         serve.init("/test")
 
     def setUp(self):
@@ -381,10 +364,8 @@ class TestModels (TestCase) :
 
     def getJSON(self, url) :
         with serve.app.test_client() as a:
-            print("requesting url " + url)
             resp = a.get(url)
             datastr = resp.get_data(as_text=True)
-            print(datastr)
             data = json.loads(datastr)
             return data["response"]
         return None
@@ -401,7 +382,6 @@ class TestModels (TestCase) :
 
     def test_get_all_players_2 (self):
         players = self.getJSON("/api/players")
-        print(players)
         player = serve.Player(name="Tim Duncan", player_id=1495)
         player_dict = serve.player_to_dict(player)
         self.assertTrue(player_dict in players)
@@ -502,23 +482,50 @@ class TestModels (TestCase) :
         self.assertEqual(team["name"], "San Antonio")
         self.assertEqual(team["abrv"], "SAS")
 
-
-
-
-
     """
         Get team stats for season
     """
+
+    def test_get_team_stats_for_season_1(self) :
+        result = self.getJSON("/api/team/" + str(self.testTeamId) + "/season/" + self.testSeason)
+        self.assertNotEqual(result, None)
+        self.assertEqual(result["season"], self.testSeason)
+        self.assertEqual(result["team_id"], self.testTeamId)
+        self.assertEqual(result["plusminus"], self.stat_1.plusminus)
+
+    def test_get_team_stats_for_season_2(self) :
+        result = self.getJSON("/api/team/" + str(self.testTeamId) + "/season/0")
+        self.assertEqual(result, None)
+
+    def test_get_team_stats_for_season_3(self) :
+        result = self.getJSON("/api/team/1610612759/season/2013")
+        self.assertNotEqual(result, None)
+        self.assertEqual(result["season"], "2013")
+        self.assertEqual(result["team_id"], 1610612759)
+        self.assertEqual(result["wins"], 60)
+        self.assertEqual(result["gp"], 82)
 
 
     """
         Get all seasons
     """
+    def test_get_all_seasons_1(self) :
+        seasons = self.getJSON("/api/seasons")
+        self.assertNotEqual(seasons, None)
+        season = serve.Season(season_id=self.testSeason)
+        self.assertTrue(season in seasons)
 
+    def test_get_all_seasons_2(self) :
+        seasons = self.getJSON("/api/seasons")
+        self.assertNotEqual(seasons, None)
+        season = serve.Season(season_id="12")
+        self.assertFalse(season in seasons)
 
-    """
-        Get season by id
-    """
+    def test_get_all_seasons_3(self) :
+        seasons = self.getJSON("/api/seasons")
+        self.assertNotEqual(seasons, None)
+        season = serve.Season(season_id="2013")
+        self.assertTrue(season in seasons)
 
     """
         utility function used for unit test webpage

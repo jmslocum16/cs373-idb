@@ -141,10 +141,11 @@ def get_team_by_id(team_id):
 def get_team_stats_for_season(team_id, season_id):
     s = Session(Engine, expire_on_commit=False)
     teams = s.query(Team).get(team_id)
-    seasons = s.query(StatLine).filter(StatLine.season_id == season_id and StatLine.team_id == team_id).all()
-    assert len(seasons) == 1
+    seasons = s.query(StatLine).filter(StatLine.season == season_id and StatLine.team_id == team_id and StatLine.player_id == None).all()
     s.close()
-    return jsonify(response=seasons[0])
+    seasons = [statline_to_dict(season) for season in seasons if season != None]
+    seasons = None if len(seasons) == 0 else seasons[0]
+    return jsonify(response=seasons)
 
 @app.route('/api/seasons')
 def get_all_seasons():
@@ -152,13 +153,6 @@ def get_all_seasons():
     seasons = s.query(Season).all()
     s.close()
     return jsonify(response=[season_to_dict(season) for season in seasons if season != None])
-
-@app.route('/api/season/{season_id}')
-def get_season_by_id(season_id):
-    s = Session(Engine, expire_on_commit=False)
-    season = s.query(Season).get(season_id)
-    s.close()
-    return jsonify(response={ "season_id" : season.season_id, "year" : season.season_id + "-" + str(int(season_id)+1) })
 
 # web endpoints
 
