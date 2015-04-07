@@ -1,65 +1,83 @@
 {% extends "base.html" %}
 {% block body %}
+
+
 <body>
-<!-- tabs -->
-<div class="tabbable boxed parentTabs">
+  <!-- tabs -->
+  <div class="tabbable boxed parentTabs container">
+    
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#seasons-tab">Seasons</a>
-        </li>
-        <li><a href="#teams-tab">Teams</a>
-        </li>
-  	    <li><a href="#players-tab">Players</a>
-        </li>
-        <li><a href="#about-tab">About the team</a>
-        </li>
+      <li class="active"><a href="#seasons-tab">Seasons</a>
+      </li>
+      <li><a href="#teams-tab">Teams</a>
+      </li>
+      <li><a href="#players-tab">Players</a>
+      </li>
+      <li><a href="#about-tab">About the team</a>
+      </li>
     </ul>
-  <div class="tab-content">
+
+  </div>
+
+  <div class="tab-content container">
+
     <div class="tab-pane fade active in" id="seasons-tab">
-	    <h1>Seasons</h1>
-	      {% for season in seasons %}
-          <a href="seasons/{{ season.season_id }}.html">{{ season.season_id }}</a>
-          <br/>
+     <h1>Seasons</h1>
+     <div class="row">
+      <div class="list-group col-lg-3">
+        {% for season in seasons %}
+          <a href="seasons/{{ season.season_id }}.html" class="list-group-item">{{ season.season_id}}</a>
         {% endfor %}
+      </div>
+     </div>
     </div>
-	  <div class="tab-pane fade" id="teams-tab">
-	    <h1>Teams</h1>
-	      {% for team in teams %}
-        <a href="teams/{{ team.team_id }}.html">{{ team.name }}</a>
-        <br>
+
+  <div class="tab-pane fade" id="teams-tab">
+   <h1>Teams</h1>
+   <div class="row">
+    <div class="list-group col-lg-4">
+     {% for team in teams %}
+     <a href="teams/{{ team.team_id }}.html" class="list-group-item">{{ team.name }}</a>
+     {% endfor %}
+    </div>
+   </div>
+  </div>
+
+  <div class="tab-pane fade" id="players-tab">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        {% for letter in alphabet %}
+        {% if letter == 'a' %}
+        <li class="active">
+          {% else %}
+        <li>
+          {% endif %}
+            <a href="#players-{{ letter }}-tab">{{ letter.upper() }}</a></li>
         {% endfor %}
-	  </div>	
-    <div class="tab-pane fade" id="players-tab">
-      <div class="tabbable">
-                <ul class="nav nav-tabs">
-                  {% for letter in alphabet %}
-                    {% if letter == 'a' %}
-                    <li class="active">
-                    {% else %}
-                    <li>
-                    {% endif %}
-                    <a href="#players-{{ letter }}-tab">{{ letter.upper() }}</a></li>
-                  {% endfor %}
-                </ul>
+      </ul>
         <div class="tab-content">
-                {% for letter in alphabet %}
-                  {% if letter == 'a' %}
+          {% for letter in alphabet %}
+          {% if letter == 'a' %}
           <div class="tab-pane fade active in" id="players-{{ letter }}-tab">
-                  {% else %}
-          <div class="tab-pane fade" id="players-{{ letter }}-tab">
-                  {% endif %}
-                    {% for player in player_by_alphabet[letter] %}
-                        <a href="players/{{ player.player_id }}.html">{{ player.name }}</a>
-                        <br/>
-                    {% endfor %}
-          </div>
+            {% else %}
+            <div class="tab-pane fade" id="players-{{ letter }}-tab">
+              {% endif %}
+              <div class="row">
+              <div class="list-group col-lg-4">
+                {% for player in player_by_alphabet[letter] %}
+                <a href="players/{{ player.player_id }}.html" class="list-group-item">{{ player.name }}</a>
                 {% endfor %}
+              </div>
+            </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
+      <div class="tab-pane fade" id="about-tab">
+        <h1><a href="about.html">About the team</a></h1>
+      </div>	
     </div>
-    <div class="tab-pane fade" id="about-tab">
-            <h1><a href="about.html">About the team</a></h1>
-    </div>	
   </div>
-</div>
 </body>
 {% endblock %}
