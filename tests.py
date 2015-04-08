@@ -34,7 +34,7 @@ class TestModels (TestCase) :
         s.query(serve.Season).filter(serve.Season.season_id == self.testSeason).delete()
         s.query(serve.StatLine).filter(serve.StatLine.stat_id > self.baseStatId).delete()
         s.query(serve.Player).filter(serve.Player.player_id == self.testPlayerId).delete()
-        s.query(serve.Team).filter(serve.Team.team_id == self.testTeamId).all()
+        s.query(serve.Team).filter(serve.Team.team_id == self.testTeamId).delete()
         s.commit()
         s.close()
 
