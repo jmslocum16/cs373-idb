@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+<body>
+<div>
+  <span>
+    Standard out
+  </span>
+  <pre id="out">
+    {{ test_out }}
+  </pre>
+</div>
+<div>
+  <span>
+    Standard error
+  </span>
+  <pre id="err">
+    {{ test_err }}
+  </pre>
+</div>
+</body>
+{% endblock %}
