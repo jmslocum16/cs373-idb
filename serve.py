@@ -202,7 +202,7 @@ def get_player_page(player_id):
     season_to_stat = { season : aggregateStatLines(filter(lambda x: x['season'] == season, map(lambda x: statline_to_dict(x), stats)), player_id, team_id, season) for season in map(lambda x: x.season_id, seasons) }
     season_to_stat = { k : season_to_stat[k] for k in season_to_stat if season_to_stat[k] }
     seasons = filter(lambda x: x.season_id in season_to_stat, seasons)
-    return render_template('player.html', player=player, seasons=seasons, season_to_stat=season_to_stat, lower_abrv=team.abrv.lower(), upper_abrv=team.abrv.upper())
+    return render_template('player.html', player=player, seasons=seasons, season_to_stat=season_to_stat, lower_abrv=team.abrv.lower(), team_id=team.team_id)
 
 @app.route('/seasons/<season_id>')
 def get_season_page(season_id):
