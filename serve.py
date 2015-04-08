@@ -4,12 +4,22 @@ import Models
 
 from flask import Flask, jsonify, render_template
 from sqlalchemy.orm import Session
+import subprocess
 
 app = Flask(__name__, static_folder='static_html')
 app.debug = False
 app.secret_key = "\xae\xf36S}\xa9\x81\xc8\xa4`\xf0\\F\x19iJ\x19f\xf4\x92VV'\x91\xdf"
 
 STATIC_FOLDER = './static_html/'
+
+def captureTestOutput() :
+    """
+        utility function used for unit test webpage
+        unitTestObject Test object to capture test output of
+    """
+    process = subprocess.Popen("python3 tests.py".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process.wait()
+    return (process.stdout.read().decode('utf-8'), process.stderr.read().decode('utf-8'))
 
 def player_to_dict(player):
     return None if player == None else { "player_id" : player.player_id, "name" : player.name }
@@ -116,11 +126,14 @@ def get_player_by_id(player_id):
 
 @app.route('/api/player/<player_id>/season/<season_id>')
 def get_player_stats_for_season(player_id, season_id):
+    player_id = int(player_id)
     s = Session(Engine, expire_on_commit=False)
     player = s.query(Player).get(int(player_id))
-    lines = s.query(StatLine).filter(StatLine.player_id == int(player_id) and StatLine.season_id == season_id).all()
+    lines = s.query(StatLine).filter(StatLine.player_id == player_id).filter(StatLine.season == season_id).all()
+    lines = sorted(lines, key=lambda x: int(x.season))
+    team_id = lines[-1].team_id
     lines = [statline_to_dict(line) for line in lines if line != None]
-    lines = None if len(lines) == 0 else aggregateStatLines(lines, player_id, None, season_id)
+    lines = None if len(lines) == 0 else aggregateStatLines(lines, player_id, team_id, season_id)
     s.close()
     return jsonify(response=lines)
 
@@ -141,8 +154,7 @@ def get_team_by_id(team_id):
 @app.route('/api/team/<team_id>/season/<season_id>')
 def get_team_stats_for_season(team_id, season_id):
     s = Session(Engine, expire_on_commit=False)
-    teams = s.query(Team).get(team_id)
-    seasons = s.query(StatLine).filter(StatLine.season == season_id and StatLine.team_id == team_id and StatLine.player_id == None).all()
+    seasons = s.query(StatLine).filter(StatLine.season == str(season_id)).filter(StatLine.team_id == team_id).filter(StatLine.player_id == None).all()
     s.close()
     seasons = [statline_to_dict(season) for season in seasons if season != None]
     seasons = None if len(seasons) == 0 else seasons[0]
@@ -263,6 +275,11 @@ def get_photo(photo_id):
     if os.path.isfile(STATIC_FOLDER + static_file):
         return app.send_static_file(static_file)
 
+@app.route('/run_tests')
+def run_tests():
+    out, err = captureTestOutput()
+    return render_template('tests.html', test_out=out, test_err=err)
+
 def init(path) :
     global StatLine
     global Player
@@ -277,6 +294,5 @@ def init(path) :
     
 
 if __name__ == "__main__":
-    #TODO - not test...
     init("/nba")
     app.run('0.0.0.0')
