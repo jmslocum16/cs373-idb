@@ -1,4 +1,225 @@
-commit f8382642a853979e7240a45284edce01e12d0021
+commit f9316ab8ec365dbe6579f1e6532bec9d4277b0e5
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 9 15:52:57 2015 -0500
+
+    Update tests output with Seasons tests changes
+
+commit ce5cf07f7e87d2a8bed190e700d9090842685dd0
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 9 15:20:50 2015 -0500
+
+    Fix debug variable
+
+commit 3c936719579588a412b3828bb43ad76d8fab3be9
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 9 15:20:07 2015 -0500
+
+    Add season endpoint (as described in tech report) with tests
+
+commit 47ccbe1821f7e7b77d1dd74fb93eff1b0fef6fb0
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 8 17:32:47 2015 -0500
+
+    Update tests.out file with new tests; resolves #46
+
+commit 70bdae7c8d4a0c4b0e64e71864d02814b6906c24
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 8 17:22:09 2015 -0500
+
+    Missing template from last commit
+
+commit 0b4b4ff89a42eb0e9045caf6cbb791e9bc172900
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 8 17:21:08 2015 -0500
+
+    Add unit tests endpoint and fix broken tests; resolves #33, resolves #50
+
+commit a241f1bc5d4ea91c9a2395d61a1888fe79fddcde
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 8 01:29:20 2015 -0500
+
+    Fix team logo link on player pages
+
+commit f3ee03c8f91a9c817d31c6de61c4f35254833cc0
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Tue Apr 7 16:09:50 2015 -0500
+
+    moved about.html into tab instead of redirect
+
+commit c5fe7f90ae6c2cb2dbc633dd47bb0e11ba364d4d
+Merge: 1cbe725 5c7d8ec
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Tue Apr 7 15:53:27 2015 -0500
+
+    Merge branch 'master' of https://github.com/jmslocum16/cs373-idb
+
+commit 1cbe725fbf9ba9aa22c12bd09252699844bfca0e
+Author: Ernesto Barajas <ernestobarajas@utexas.edu>
+Date:   Tue Apr 7 15:52:55 2015 -0500
+
+    added bootstrap list items. resolves #48
+
+commit 5c7d8ec7cff5a11968ca078312ddac9e70587947
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Tue Apr 7 19:44:54 2015 +0000
+
+    fixed src ref in about.html
+
+commit dd2ccf1cd345824001877afa51cd34e99eba4ed9
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Tue Apr 7 16:01:20 2015 +0000
+
+    serving using mod_wsgi and apache2
+
+commit 18e908f9d091dbd72de5b4b95bb7db53a52193b6
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Mon Apr 6 18:18:31 2015 -0500
+
+    Finish changing to dynamic html pages; resolves #28, resolves #44, resolves #45, resolves #42, resolves #37, resolves #35, resolves #30
+
+commit 6d034bc8434d47496d9b1f2ee80b01069bda0360
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Apr 6 21:38:05 2015 +0000
+
+    finished unit tests, removed get_season_by_id cuz it's dum
+
+commit 6055d25285332abdb7bcd1c78def1f0dc4d6f809
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Apr 6 21:09:34 2015 +0000
+
+    fixed server and remaining tests to handle things not in database
+
+commit 0dc6d3958d1627e84f5f84b75376d494afe71a48
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Apr 6 20:54:02 2015 +0000
+
+    unit tests (mostly) work with server. Need to add more to test database and fix a couple things
+
+commit a694f8bc9a48d48706a8b3b5d1df3e520c22aebc
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Mon Apr 6 15:26:16 2015 -0500
+
+    Dynamicify splash, fix more issues with players page
+
+commit 04b948995178d507e51280c77489991bcefeaafb
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Mon Apr 6 14:01:58 2015 -0500
+
+    Fix rounding issues on player pages/make dynamic; fix self.engine; resolves #45
+
+commit 1ca8f78e907d8401fe80ee389f49e688453aee4e
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 5 18:25:41 2015 -0500
+
+    Update season page (and remove duplicate logo) and fix base template logo; Resolves #44
+
+commit 49d68ffa50fb775ce442b98b6f429caa41103f41
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Mon Apr 6 17:28:19 2015 +0000
+
+    ernesto added more data to etl and josh got unit tests to run
+
+commit e0069136b415bae3a040e5e593508f0370a70073
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Sun Apr 5 16:42:20 2015 -0500
+
+    Revert "corrected season column name in tests"
+    
+    This reverts commit f910d6c8b5c51621af27410c643847cc06baf558.
+    
+    Reverting last commit.
+
+commit f910d6c8b5c51621af27410c643847cc06baf558
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Sun Apr 5 16:37:48 2015 -0500
+
+    corrected season column name in tests
+
+commit cb73511ca5342f1335464e7b5f5f6e835eed7a14
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Sun Apr 5 16:01:48 2015 -0500
+
+    actually fixed syntax error?
+
+commit 2082262e01e2148f59257da3c8476d2f9256ba18
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Sun Apr 5 16:00:36 2015 -0500
+
+    fixed syntax error
+
+commit b5a89fd3579ab7af7da00ac2d196f55f339fa88f
+Author: Ernesto Barajas <ernesto@Darkrai.rorschach>
+Date:   Sun Apr 5 16:00:25 2015 -0500
+
+    changed database address
+
+commit f89e1256d7b9b151ba3516bd0d1dc8238c9ce7e3
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 5 14:12:42 2015 -0500
+
+    template-ify team, season pages
+
+commit 96270fb482b7f8568db99974a2a0a9ddd3ff4256
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 5 14:03:03 2015 -0500
+
+    Change endpoints to render templates (templates not finished)
+
+commit fa2c63538c4db9bdc89fc2759b64a24626610f9d
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Sun Apr 5 14:04:06 2015 -0500
+
+    Added unit tests for player endpoints and to_dict functions
+
+commit 52593c0d177bc49fe2460545715fc1c909696721
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Apr 5 13:55:54 2015 -0500
+
+    modified aggregate statlines and made more tests
+
+commit 4b645ed85d5359f2efc333c3f0bd4d5d79113bbd
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 5 12:52:55 2015 -0500
+
+    Add base template
+
+commit 949f5e1c002bb939744c1a68dfba83a94c06a5b3
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Apr 1 20:22:15 2015 -0500
+
+    added functionality to read unit test output by temporarily redirecting stdout
+
+commit 6fe25eaf03b58f85f47ea8975c01e83112730301
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Wed Apr 1 19:25:30 2015 -0500
+
+    tests.py formatting was super inconsistent
+
+commit 62da7e770303e24318f987d82f76fe067e764640
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 1 19:13:41 2015 -0500
+
+    Implemented but did not test API endpoints, change loadModels to take a database; resolves #36
+
+commit 03aec653ce4f36181948e525c1473d2ac54d25ff
+Author: KevinHino <kevin.hino@utexas.edu>
+Date:   Tue Mar 31 12:33:23 2015 -0500
+
+    Added github repo link to about page. Fixed #25
+
+commit 98df69bef81fdbaf27fa54ea264b6753189e24ff
+Author: Katie <kathryn.d.mcdermott@gmail.com>
+Date:   Fri Mar 27 20:44:36 2015 -0500
+
+    renamed files to match spec
+
+commit 59a96f845b13109896ba18ab00367e8b84452131
+Author: Dillon Walker <dillon@cs.utexas.edu>
+Date:   Thu Mar 26 20:43:14 2015 -0500
+
+    Add Kevin's about information
+
+commit ffac6df2b6de269cc3d6091437fd600af0eb9453
 Author: jmslocum16 <jmslocum16@yahoo.com>
 Date:   Thu Mar 26 20:21:00 2015 -0500
 
