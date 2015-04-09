@@ -527,5 +527,27 @@ class TestModels (TestCase) :
         season = serve.season_to_dict(serve.Season(season_id="2013"))
         self.assertTrue(season in seasons)
 
+    """
+        Get stats for season
+    """
+    def test_get_season_1(self) :
+        season = self.getJSON("/api/season/" + str(self.testSeason))
+        season = serve.season_to_dict(serve.Season(season_id=self.testSeason))
+        self.assertNotEqual(season, None)
+        self.assertTrue(self.stat_1 not in season)
+
+    def test_get_season_2(self) :
+        season = self.getJSON("/api/season/" + str(self.testSeason))
+        self.assertFalse(self.stat_2 in season)
+
+    def test_get_season_3(self) :
+        season = self.getJSON("/api/season/2013")
+        self.assertNotEqual(season, None)
+        found = False
+        for s in season:
+          for line in s:
+            found |= line["team_id"] == 1610612759
+        self.assertTrue(found)
+
 if __name__ == "__main__":
     main()

@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 import subprocess
 
 app = Flask(__name__, static_folder='static_html')
-app.debug = False
+app.debug = True
 app.secret_key = "\xae\xf36S}\xa9\x81\xc8\xa4`\xf0\\F\x19iJ\x19f\xf4\x92VV'\x91\xdf"
 
 STATIC_FOLDER = './static_html/'
@@ -166,6 +166,14 @@ def get_all_seasons():
     seasons = s.query(Season).all()
     s.close()
     return jsonify(response=[season_to_dict(season) for season in seasons if season != None])
+
+@app.route('/api/season/<season_id>')
+def get_season(season_id):
+    s = Session(Engine, expire_on_commit=False)
+    stats = s.query(StatLine).filter(StatLine.season == str(season_id)).filter(StatLine.player_id == None).all()
+    s.close()
+    stats = list(map(lambda x: statline_to_dict(x), stats))
+    return jsonify(response=[stats])
 
 # web endpoints
 
