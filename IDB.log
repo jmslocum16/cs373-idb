@@ -1,3 +1,9 @@
+commit 19234a1b539688a83747518491a2d033f838f010
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 9 16:45:56 2015 -0500
+
+    Update about with git stats and project 2 updates and add new commits to log; resolves #34
+
 commit f9316ab8ec365dbe6579f1e6532bec9d4277b0e5
 Author: Dillon Walker <dillon.walker@utexas.edu>
 Date:   Thu Apr 9 15:52:57 2015 -0500
