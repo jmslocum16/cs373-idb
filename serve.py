@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 import subprocess
 
 app = Flask(__name__, static_folder='static_html')
-app.debug = True
+app.debug = False
 app.secret_key = "\xae\xf36S}\xa9\x81\xc8\xa4`\xf0\\F\x19iJ\x19f\xf4\x92VV'\x91\xdf"
 
 STATIC_FOLDER = './static_html/'
