@@ -5,6 +5,7 @@ import Models
 from flask import Flask, jsonify, render_template
 from sqlalchemy.orm import Session
 import subprocess
+import requests
 
 app = Flask(__name__, static_folder='static_html')
 app.debug = False
@@ -287,6 +288,16 @@ def get_photo(photo_id):
 def run_tests():
     out, err = captureTestOutput()
     return render_template('tests.html', test_out=out, test_err=err)
+
+@app.route('/jobs_api')
+def jobs_api():
+    dest = "http://104.130.229.90:5000/api/"
+    jobs = requests.get(dest + "job").json()["Jobs"]
+    locations = requests.get(dest + "location").json()["locations"]
+    languages = requests.get(dest + "language").json()["languages"]
+    companies = requests.get(dest + "company").json()["Companies"]
+    skillsets = requests.get(dest + "skillset").json()["Skillsets"]
+    return render_template('api.html', jobs=jobs, locations=locations, languages=languages, companies=companies, skillsets=skillsets)
 
 def init(path) :
     global StatLine
