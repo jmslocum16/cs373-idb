@@ -204,6 +204,10 @@ def about():
 def sorttable():
     return app.send_static_file('sorttable.js')
 
+@app.route('/chart.min.js')
+def chartjs():
+    return app.send_static_file('chart.min.js')
+
 @app.route('/style.css')
 def get_style():
     return app.send_static_file('style.css')
@@ -297,7 +301,10 @@ def jobs_api():
     languages = requests.get(dest + "language").json()["languages"]
     companies = requests.get(dest + "company").json()["Companies"]
     skillsets = requests.get(dest + "skillset").json()["Skillsets"]
-    return render_template('api.html', jobs=jobs, locations=locations, languages=languages, companies=companies, skillsets=skillsets)
+    numData = [len(jobs), len(locations), len(languages), len(companies), len(skillsets)]
+    jobByLoc = {loc["location_name"] : len(list(filter(lambda x: loc["location_id"] == x["location_id"], jobs))) for loc in locations}
+    jobByComp = {comp["company_name"] : len(list(filter(lambda x: comp["company_id"] == x["company_id"], jobs))) for comp in companies}
+    return render_template('api.html', jobs=jobs, locations=locations, languages=languages, companies=companies, skillsets=skillsets, numData=numData, jobByLoc=jobByLoc, jobByComp=jobByComp)
 
 def init(path) :
     global StatLine

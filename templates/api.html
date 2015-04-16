@@ -1,6 +1,60 @@
 {% extends "base.html" %}
 {% block body %}
 
+<script>
+  $(document).ready(function() {
+    // Number of jobs bar graph
+    var numsChartctx = $("#numsChart").get(0).getContext("2d");
+    var c = new Chart(numsChartctx).Bar({
+      labels: ["Jobs", "Locations", "Languages", "Companies", "SkillSets"],
+      datasets: [
+        {
+          label: "Total number of jobs",
+          fillColor: "rgba(70,220,70,0.5)",
+          strokeColor: "rgba(70,220,70,0.8)",
+          highlightFill: "rgba(70,220,7,0.75)",
+          highlightStroke: "rgba(70,220,70,1)",
+          data: {{ numData }}
+        }
+      ]
+    });
+    // Number of jobs by location
+    var numsChartctx = $("#jobByLoc").get(0).getContext("2d");
+    var c = new Chart(numsChartctx).PolarArea([
+      {% for loc in jobByLoc %}
+        {% set index = loop.index %}
+        {
+          value: {{ jobByLoc[loc] }},
+          color: "rgba({{ (70*index)%255 }}, {{ (170*index)%255 }}, {{ (230*index)%255 }}, 0.5)",
+          highlight: "rgba({{ (70*index)%255 }}, {{ (170*index)%255 }}, {{ (230*index)%255 }}, 0.8)",
+          label: "{{ loc }}"
+        {% if loop.last %}
+        }
+        {% else %}
+        },
+        {% endif %}
+      {% endfor %}
+    ]);
+    // Number of jobs by Company
+    var numsChartctx = $("#jobByComp").get(0).getContext("2d");
+    var c = new Chart(numsChartctx).PolarArea([
+      {% for comp in jobByComp %}
+        {% set index = loop.index %}
+        {
+          value: {{ jobByComp[comp] }},
+          color: "rgba({{ (70*index)%255 }}, {{ (170*index)%255 }}, {{ (230*index)%255 }}, 0.5)",
+          highlight: "rgba({{ (70*index)%255 }}, {{ (170*index)%255 }}, {{ (230*index)%255 }}, 0.8)",
+          label: "{{ comp }}"
+        {% if loop.last %}
+        }
+        {% else %}
+        },
+        {% endif %}
+      {% endfor %}
+    ]);
+  });
+</script>
+
 <body>
 
 <div class="header">
@@ -10,18 +64,33 @@
 </div>
 
 <span>
-<h2> Jobs: </h2>
-{{ jobs[0] }}
+<h2> By the numbers </h2>
+<canvas id="numsChart" width="600" height="400"></canvas>
 </span>
 
 <span>
-<h2> Locations: </h2>
+<h2> Jobs Offered by Location: </h2>
+<canvas id="jobByLoc" width="600" height="400"></canvas>
+</span>
+
+<span>
+<h2> Jobs Offered by Company: </h2>
+<canvas id="jobByComp" width="600" height="400"></canvas>
+</span>
+
+<!--<span>
+<h2> locations: </h2>
 {{ locations[0] }}
 </span>
 
 <span>
 <h2> Languages: </h2>
 {{ languages[0] }}
+</span>
+
+<span>
+<h2> Jobs: </h2>
+{{ jobs[0] }}
 </span>
 
 <span>
@@ -32,7 +101,7 @@
 <span>
 <h2> Skill sets: </h2>
 {{ skillsets[0] }}
-</span>
+</span>-->
 
 </body>
 
