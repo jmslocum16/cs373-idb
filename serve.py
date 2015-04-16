@@ -18,7 +18,7 @@ def captureTestOutput() :
         utility function used for unit test webpage
         unitTestObject Test object to capture test output of
     """
-    process = subprocess.Popen("python3 tests.py".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen("python3 /home/project/cs373-idb/tests.py".split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     process.wait()
     return (process.stdout.read().decode('utf-8'), process.stderr.read().decode('utf-8'))
 
