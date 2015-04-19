@@ -3,7 +3,7 @@ import os.path
 import Models
 
 from flask import Flask, jsonify, render_template
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, _or, _and, select
 import subprocess
 import requests
 
@@ -305,6 +305,46 @@ def jobs_api():
     jobByLoc = {loc["location_name"] : len(list(filter(lambda x: loc["location_id"] == x["location_id"], jobs))) for loc in locations}
     jobByComp = {comp["company_name"] : len(list(filter(lambda x: comp["company_id"] == x["company_id"], jobs))) for comp in companies}
     return render_template('api.html', jobs=jobs, locations=locations, languages=languages, companies=companies, skillsets=skillsets, numData=numData, jobByLoc=jobByLoc, jobByComp=jobByComp)
+
+
+@app.route('/search/<token>')
+def search (token):
+    tokens = str.split(token)
+    results = []
+    if not tokens:
+        return render_template('search.html', results = results)
+
+
+    tableName = tokens[0]
+    tokens = ''.join(tokens[1:])
+
+    if tableName == 'player':
+        results = player_search(tokens)
+    elif tableName == 'team':
+        results = team_search(tokens)
+    elif tableName == 'season':
+        results = season_search(tokens)
+
+    return render_template('search.html', results = results)
+
+
+def player_search (terms):
+    s = Session(Engine, expire_on_commit=False)
+    queryOutput = s.query(Player).filter(s.name.like("%".join(terms).join("%")).all()
+    return [(x.player_id, x.name) for x in queryOutput)
+
+
+def team_search (terms):
+    s = Session(Engine, expire_on_commit=False)
+    queryOutput = s.query(Team).filter(s.name.like("%".join(terms).join("%")).all()
+    return [(x.team_id, x.name) for x in queryOutput)
+
+
+def season_search (terms):
+    s = Session(Engine, expire_on_commit=False)
+    queryOutput = s.query(Season).filter(s.season_str.like("%".join(terms).join("%")).all()
+    return [(x.season_str, x.season_str) for x in queryOutput)
+
 
 def init(path) :
     global StatLine
