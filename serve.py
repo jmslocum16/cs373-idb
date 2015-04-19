@@ -3,7 +3,7 @@ import os.path
 import Models
 
 from flask import Flask, jsonify, render_template
-from sqlalchemy.orm import Session, _or, _and, select
+from sqlalchemy.orm import Session
 import subprocess
 import requests
 
@@ -330,20 +330,20 @@ def search (token):
 
 def player_search (terms):
     s = Session(Engine, expire_on_commit=False)
-    queryOutput = s.query(Player).filter(s.name.like("%".join(terms).join("%")).all()
-    return [(x.player_id, x.name) for x in queryOutput)
+    queryOutput = s.query(Player).filter(Player.name.like("%"+ terms +"%")).all()
+    return [(x.player_id, x.name) for x in queryOutput]
 
 
 def team_search (terms):
     s = Session(Engine, expire_on_commit=False)
-    queryOutput = s.query(Team).filter(s.name.like("%".join(terms).join("%")).all()
-    return [(x.team_id, x.name) for x in queryOutput)
+    queryOutput = s.query(Team).filter(Team.name.like("%"+ terms + "%")).all()
+    return [(x.team_id, x.name) for x in queryOutput]
 
 
 def season_search (terms):
     s = Session(Engine, expire_on_commit=False)
-    queryOutput = s.query(Season).filter(s.season_str.like("%".join(terms).join("%")).all()
-    return [(x.season_str, x.season_str) for x in queryOutput)
+    queryOutput = s.query(Season).filter(Season.season_id.like("%" + terms + "%")).all()
+    return [(x.season_id, x.season_id) for x in queryOutput]
 
 
 def init(path) :

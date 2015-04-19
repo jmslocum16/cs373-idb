@@ -556,7 +556,7 @@ class TestModels (TestCase):
        result = serve.player_search("Test Player")
        self.assertTrue(len(result) == 1)
        self.assertTrue(result[0][0] == -5)
-       self.assertTrue(result[0][1] is "Test Player")
+       self.assertTrue(result[0][1] == "Test Player")
 
     def test_player_search_2 (self):
         result = serve.player_search("sfdgsdgsdfkjgfdskjghafdjhadfljo")
@@ -564,7 +564,7 @@ class TestModels (TestCase):
 
     def test_player_search_3 (self):
         result = serve.player_search("James")
-        self.assertTrue(any (r[0] == 201935 and r[1] is "James Harden" for r in result))
+        self.assertTrue(any (r[0] == 201935 and r[1] == "James Harden" for r in result))
 
     """
         Team Search Tests
@@ -573,8 +573,8 @@ class TestModels (TestCase):
     def test_team_search_1 (self):
        result = serve.team_search("Test Team")
        self.assertTrue(len(result) == 1)
-       self.assertTrue(result[0][0] == 10)
-       self.assertTrue(result[0][1] is "Test Team")
+       self.assertTrue(result[0][0] == -10)
+       self.assertTrue(result[0][1] == "Test Team")
 
     def test_team_search_2 (self):
         result = serve.team_search("sfdgsdgsdfkjgfdskjghafdjhadfljo")
@@ -594,7 +594,7 @@ class TestModels (TestCase):
        result = serve.season_search("1000")
        self.assertTrue(len(result) == 1)
        self.assertTrue(result[0][0] == "1000")
-       self.assertTrue(result[0][1] is "1000")
+       self.assertTrue(result[0][1] == "1000")
 
     def test_team_search_2 (self):
         result = serve.season_search("sfdgsdgsdfkjgfdskjghafdjhadfljo")
@@ -603,7 +603,7 @@ class TestModels (TestCase):
     def test_team_search_3 (self):
         result = serve.season_search("20")
         self.assertTrue(len(result) > 0)
-        self.assertTrue(any (r[0] == "2014" and r[1] is "2014" for r in result))
+        self.assertTrue(any (r[0] == "2014" and r[1] == "2014" for r in result))
 
 
 if __name__ == "__main__":
