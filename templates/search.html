@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="container-fluid">
+  {% for result in results %}
+  <div class="row-fluid">
+    <div class="col-xs-4">
+      <span>{{ result[2] }}</span>
+    </div>
+    <div class="col-xs-8">
+      <a href="{{ result[3] }}">{{ result[1] }}</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

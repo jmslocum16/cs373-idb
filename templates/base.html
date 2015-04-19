@@ -42,15 +42,30 @@
         obj.show();
       }
     });
+    $("#SearchButton").click(function() {
+      window.location="/search/" + $("#SearchBar").val();
+    });
   });
 </script>
 </head>
 
-<div id="logodiv">
-<span style="margin-left:50px">
-<img style="display: inline-block" src="http://i.cdn.turner.com/nba/tmpl_asset/static/nba-cms3-homepage/1567/elements/global/nba-logo.png">
-<h1 style="display: inline-block">NBA Stats</h1>
-</span>
+<div class="container-fluid">
+  <div id="logodiv" class="col-xs-4">
+    <span style="">
+      <img style="display: inline-block" src="http://i.cdn.turner.com/nba/tmpl_asset/static/nba-cms3-homepage/1567/elements/global/nba-logo.png">
+      <h1 style="display: inline-block">NBA Stats</h1>
+    </span>
+  </div>
+  <div id="custom-search-input">
+    <div class="input-group col-xs-8">
+      <input id="SearchBar" type="text" class="  search-query form-control" placeholder="Search" />
+      <span class="input-group-btn">
+        <button id="SearchButton" class="btn btn-danger" type="button">
+          <span class=" glyphicon glyphicon-search"></span>
+        </button>
+      </span>
+    </div>
+  </div>
 </div>
 
 {% block body %}{% endblock %}

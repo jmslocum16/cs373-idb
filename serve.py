@@ -309,7 +309,8 @@ def jobs_api():
 
 @app.route('/search/<token>')
 def search (token):
-    tokens = str.split(token)
+    tokens = token.split(":")
+    print(tokens)
     results = []
     if not tokens:
         return render_template('search.html', results = results)
@@ -317,6 +318,7 @@ def search (token):
 
     tableName = tokens[0]
     tokens = ''.join(tokens[1:])
+    print(tokens)
 
     if tableName == 'player':
         results = player_search(tokens)
@@ -331,19 +333,19 @@ def search (token):
 def player_search (terms):
     s = Session(Engine, expire_on_commit=False)
     queryOutput = s.query(Player).filter(Player.name.like("%"+ terms +"%")).all()
-    return [(x.player_id, x.name) for x in queryOutput]
+    return [(x.player_id, x.name, "Player", "/players/" + str(x.player_id)) for x in queryOutput]
 
 
 def team_search (terms):
     s = Session(Engine, expire_on_commit=False)
     queryOutput = s.query(Team).filter(Team.name.like("%"+ terms + "%")).all()
-    return [(x.team_id, x.name) for x in queryOutput]
+    return [(x.team_id, x.name, "Team", "/teams/" + str(x.team_id)) for x in queryOutput]
 
 
 def season_search (terms):
     s = Session(Engine, expire_on_commit=False)
     queryOutput = s.query(Season).filter(Season.season_id.like("%" + terms + "%")).all()
-    return [(x.season_id, x.season_id) for x in queryOutput]
+    return [(x.season_id, x.season_id, "Season", "/seasons/" + str(x.season_id)) for x in queryOutput]
 
 
 def init(path) :
