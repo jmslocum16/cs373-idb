@@ -309,25 +309,31 @@ def jobs_api():
 
 @app.route('/search/<token>')
 def search (token):
-    tokens = token.split(":")
-    print(tokens)
-    results = []
+    tokens = token.split(" ")
     if not tokens:
         return render_template('search.html', results = results)
 
+    andResults = set(player_search(tokens[0])) | set(team_search(tokens[0])) | set(season_search(tokens[0]))
+    orResults = set(player_search(tokens[0])) | set(team_search(tokens[0])) | set(season_search(tokens[0]))
 
-    tableName = tokens[0]
-    tokens = ''.join(tokens[1:])
-    print(tokens)
+    for token in tokens[1:]:
+      andResults &= set(player_search(token)) | set(team_search(token)) | set(season_search(token))
+      orResults |= set(player_search(token)) | set(team_search(token)) | set(season_search(token))
+    orResults -= andResults
 
-    if tableName == 'player':
-        results = player_search(tokens)
-    elif tableName == 'team':
-        results = team_search(tokens)
-    elif tableName == 'season':
-        results = season_search(tokens)
+    andResults = list(andResults)
+    orResults = list(orResults)
 
-    return render_template('search.html', results = results)
+    andResults = sorted(andResults, key=lambda x: str(x[1]))
+    andResults = sorted(andResults, key=lambda x: x[2], reverse=True)
+    orResults = sorted(orResults, key=lambda x: str(x[1]))
+    orResults = sorted(orResults, key=lambda x: x[2], reverse=True)
+
+    for token in tokens:
+        andResults = list(map(lambda x: (x[0], str(x[1]).replace(token, "<strong>" + token + "</strong>"), x[2], x[3]), andResults))
+        orResults = list(map(lambda x: (x[0], str(x[1]).replace(token, "<strong>" + token + "</strong>"), x[2], x[3]), orResults))
+
+    return render_template('search.html', andResults = andResults, orResults = orResults)
 
 
 def player_search (terms):

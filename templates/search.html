@@ -2,15 +2,47 @@
 {% block body %}
 
 <div class="container-fluid">
-  {% for result in results %}
+  {% if andResults %}
   <div class="row-fluid">
-    <div class="col-xs-4">
-      <span>{{ result[2] }}</span>
+    <div class="col-xs-2">
+      <h3>AND - Results</h3>
     </div>
-    <div class="col-xs-8">
-      <a href="{{ result[3] }}">{{ result[1] }}</a>
+    <div class="col-xs-10">
+      <h3>Match</h3>
+    </div>
+  </div>
+  {% for result in andResults %}
+  <div class="row-fluid">
+    <div class="col-xs-2">
+      <span>{{ result[2]|safe }}</span>
+    </div>
+    <div class="col-xs-10">
+      <a href="{{ result[3]|safe }}">{{ result[1]|safe }}</a>
     </div>
   </div>
   {% endfor %}
+  {% endif %}
+  {% if orResults %}
+  <div class="row-fluid"></div>
+  <div class="row-fluid">
+    <div class="col-xs-2">
+      <h3>OR - Results</h3>
+    </div>
+    <div class="col-xs-10">
+      <h3>Match</h3>
+    </div>
+  </div>
+  <div class="row-fluid"></div>
+  {% for result in orResults %}
+  <div class="row-fluid">
+    <div class="col-xs-2">
+      <span>{{ result[2]|safe }}</span>
+    </div>
+    <div class="col-xs-10">
+      <a href="{{ result[3]|safe }}">{{ result[1]|safe }}</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
