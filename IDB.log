@@ -1,3 +1,94 @@
+commit a7bdad7859520f5c756516cd0869305a4db8635e
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Apr 23 21:29:32 2015 +0000
+
+    updated tests.out
+
+commit 5464a915386253cc60bcd71d3eef53a8482b3f03
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Apr 23 21:24:57 2015 +0000
+
+    updated models.html
+
+commit db07d0ed57b9240133f8299f6752c4b7ce2c091e
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Mon Apr 20 01:08:06 2015 -0500
+
+    Improve search functionality (as per assignment page); resolves #69
+
+commit 9126d5cc2ced13a80929c8afb5f02cd7cbf5934c
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 19 14:29:50 2015 -0500
+
+    Add search page and search bar
+
+commit 85556aaa57a9e6ca7832027f173f0fbe95dc6fe4
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 19 13:40:07 2015 -0500
+
+    Move images to photos folder... for like no reason
+
+commit 26376abe386c35c765229f9488b7b078e37aba74
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Sun Apr 19 14:23:00 2015 -0500
+
+    Added list of team twitter accounts
+
+commit 392e21e1dc9b2a5ab1816df933d00cdb80774b4e
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Apr 19 18:37:57 2015 +0000
+
+    Search works!
+
+commit b36a88468722f9f4490b7eec4b1146450f28505f
+Merge: a2bb894 abe9dad
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Apr 19 18:19:45 2015 +0000
+
+    Merge branch 'master' of https://github.com/jmslocum16/cs373-idb
+
+commit abe9dad8259dc57bb4add05c6f04edc35a994ed6
+Author: Kevin Hinojosa <kevin.hino@utexas.edu>
+Date:   Sun Apr 19 13:18:21 2015 -0500
+
+    Added search capability
+
+commit 5c6b1133c73e12222833181d5cc90decdc44e8ac
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Sun Apr 19 13:01:10 2015 -0500
+
+    added search unit tests
+
+commit 1b2b22f50d1345fa56085d9949ec35a1567e1683
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Sun Apr 19 12:41:49 2015 -0500
+
+    Format api page and add brief english descriptions; resolves #63
+
+commit a2bb8941009f8b7d4d0fdfe356dd0aef02a2e00e
+Author: jmslocum16 <jmslocum16@yahoo.com>
+Date:   Thu Apr 16 22:13:18 2015 +0000
+
+    Add absolute path for unit test running
+
+commit d35211714434da9d09ac4d71ac7f820b065b5c7d
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 16 17:10:26 2015 -0500
+
+    Add some simple stat charts to API page; relevant to #52, #60
+
+commit 44ab3260154be2af3238e49210ce2fc5d88d6ee9
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Wed Apr 15 16:08:14 2015 -0500
+
+    Add initial page and endpoint for Programmer Jobs API usage #52
+
+commit 6521b429e09553dea31fc9168ed444aacca3952c
+Author: Dillon Walker <dillon.walker@utexas.edu>
+Date:   Thu Apr 9 18:35:14 2015 -0500
+
+    Add to readme
+
 commit 19234a1b539688a83747518491a2d033f838f010
 Author: Dillon Walker <dillon.walker@utexas.edu>
 Date:   Thu Apr 9 16:45:56 2015 -0500
